@@ -29,7 +29,7 @@
      <rect>
       <x>830</x>
       <y>20</y>
-      <width>250</width>
+      <width>161</width>
       <height>45</height>
      </rect>
     </property>
@@ -44,7 +44,7 @@
       <rect>
        <x>0</x>
        <y>0</y>
-       <width>250</width>
+       <width>161</width>
        <height>45</height>
       </rect>
      </property>
@@ -56,7 +56,7 @@
        <rect>
         <x>5</x>
         <y>7</y>
-        <width>240</width>
+        <width>151</width>
         <height>30</height>
        </rect>
       </property>
@@ -76,12 +76,251 @@
      <string>分辨率</string>
     </property>
    </widget>
+   <widget class="QFrame" name="trigger_fram">
+    <property name="geometry">
+     <rect>
+      <x>1000</x>
+      <y>10</y>
+      <width>141</width>
+      <height>111</height>
+     </rect>
+    </property>
+    <property name="frameShape">
+     <enum>QFrame::StyledPanel</enum>
+    </property>
+    <property name="frameShadow">
+     <enum>QFrame::Raised</enum>
+    </property>
+    <widget class="QGroupBox" name="groupBox">
+     <property name="geometry">
+      <rect>
+       <x>0</x>
+       <y>0</y>
+       <width>141</width>
+       <height>111</height>
+      </rect>
+     </property>
+     <property name="title">
+      <string>触发模式</string>
+     </property>
+     <widget class="QRadioButton" name="radioButton_collect">
+      <property name="geometry">
+       <rect>
+        <x>10</x>
+        <y>20</y>
+        <width>89</width>
+        <height>16</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>连续采集</string>
+      </property>
+     </widget>
+     <widget class="QRadioButton" name="radioButton_software_trigger">
+      <property name="geometry">
+       <rect>
+        <x>10</x>
+        <y>40</y>
+        <width>89</width>
+        <height>16</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>软触发</string>
+      </property>
+     </widget>
+     <widget class="QPushButton" name="software_trigger_once_button">
+      <property name="geometry">
+       <rect>
+        <x>10</x>
+        <y>80</y>
+        <width>101</width>
+        <height>23</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>软件触发一次</string>
+      </property>
+     </widget>
+     <widget class="QRadioButton" name="radioButton_hardware_trigger">
+      <property name="geometry">
+       <rect>
+        <x>10</x>
+        <y>60</y>
+        <width>89</width>
+        <height>16</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>硬件出发</string>
+      </property>
+     </widget>
+    </widget>
+   </widget>
+   <widget class="QFrame" name="exp_frame">
+    <property name="geometry">
+     <rect>
+      <x>830</x>
+      <y>130</y>
+      <width>291</width>
+      <height>151</height>
+     </rect>
+    </property>
+    <property name="frameShape">
+     <enum>QFrame::StyledPanel</enum>
+    </property>
+    <property name="frameShadow">
+     <enum>QFrame::Raised</enum>
+    </property>
+    <widget class="QGroupBox" name="groupBox_2">
+     <property name="geometry">
+      <rect>
+       <x>10</x>
+       <y>10</y>
+       <width>271</width>
+       <height>41</height>
+      </rect>
+     </property>
+     <property name="title">
+      <string/>
+     </property>
+     <widget class="QRadioButton" name="exposure_mod_auto">
+      <property name="geometry">
+       <rect>
+        <x>10</x>
+        <y>10</y>
+        <width>89</width>
+        <height>16</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>自动</string>
+      </property>
+     </widget>
+     <widget class="QRadioButton" name="exposure_mode_manual">
+      <property name="geometry">
+       <rect>
+        <x>90</x>
+        <y>10</y>
+        <width>89</width>
+        <height>16</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>手动</string>
+      </property>
+     </widget>
+    </widget>
+    <widget class="QGroupBox" name="groupBox_3">
+     <property name="geometry">
+      <rect>
+       <x>10</x>
+       <y>60</y>
+       <width>271</width>
+       <height>81</height>
+      </rect>
+     </property>
+     <property name="title">
+      <string/>
+     </property>
+     <widget class="QSlider" name="horizontalSlider_gain">
+      <property name="geometry">
+       <rect>
+        <x>60</x>
+        <y>10</y>
+        <width>151</width>
+        <height>19</height>
+       </rect>
+      </property>
+      <property name="orientation">
+       <enum>Qt::Horizontal</enum>
+      </property>
+     </widget>
+     <widget class="QLabel" name="label_2">
+      <property name="geometry">
+       <rect>
+        <x>9</x>
+        <y>13</y>
+        <width>54</width>
+        <height>12</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>增益</string>
+      </property>
+     </widget>
+     <widget class="QSpinBox" name="AE_spinBox">
+      <property name="geometry">
+       <rect>
+        <x>220</x>
+        <y>10</y>
+        <width>42</width>
+        <height>22</height>
+       </rect>
+      </property>
+     </widget>
+     <widget class="QLabel" name="label_3">
+      <property name="geometry">
+       <rect>
+        <x>8</x>
+        <y>43</y>
+        <width>54</width>
+        <height>12</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>曝光时间</string>
+      </property>
+     </widget>
+     <widget class="QSlider" name="horizontalSlider_exposure_time">
+      <property name="geometry">
+       <rect>
+        <x>60</x>
+        <y>40</y>
+        <width>151</width>
+        <height>19</height>
+       </rect>
+      </property>
+      <property name="orientation">
+       <enum>Qt::Horizontal</enum>
+      </property>
+     </widget>
+     <widget class="QLineEdit" name="lineEdit_exposure_time">
+      <property name="geometry">
+       <rect>
+        <x>220</x>
+        <y>40</y>
+        <width>41</width>
+        <height>20</height>
+       </rect>
+      </property>
+     </widget>
+    </widget>
+   </widget>
+   <widget class="QLabel" name="label">
+    <property name="geometry">
+     <rect>
+      <x>840</x>
+      <y>120</y>
+      <width>54</width>
+      <height>12</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>曝光设置</string>
+    </property>
+   </widget>
   </widget>
   <widget class="QStatusBar" name="statusBar"/>
  </widget>
  <layoutdefault spacing="6" margin="11"/>
  <resources>
-  <include location="QtCamUse.qrc"/>
+  <include location="QtCamUse2.qrc"/>
  </resources>
  <connections/>
+ <slots>
+  <slot>on_radioButton_collect_clicked(bool)</slot>
+  <slot>on_radioButton_software_trigger_clicked(bool)</slot>
+  <slot>on_radioButton_hardware_trigger_clicked(bool)</slot>
+ </slots>
 </ui>

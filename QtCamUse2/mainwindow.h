@@ -43,13 +43,13 @@ private:
     int  GUI_init_parameter(int hCamera,tSdkCameraCapbility * pCameraInfo);
     int  GUI_init_Resolution(int hCamera,tSdkCameraCapbility * pCameraInfo);
     int  GUI_set_Resolution(int hCamera,tSdkCameraCapbility * pCameraInfo);
-//    int  GUI_init_exposure(int hCamera,tSdkCameraCapbility * pCameraInfo);
+    int  GUI_init_exposure(int hCamera,tSdkCameraCapbility * pCameraInfo);
 //    int  GUI_init_WB(int hCamera,tSdkCameraCapbility * pCameraInfo);
 //    int  GUI_init_mmap(int hCamera,tSdkCameraCapbility * pCameraInfo);
 //    int  GUI_init_isp(int hCamera,tSdkCameraCapbility * pCameraInfo);
 //    int  GUI_init_speed(int hCamera,tSdkCameraCapbility * pCameraInfo);
 //    int  GUI_set_speed(int hCamera,tSdkCameraCapbility * pCameraInfo);
-//    int  GUI_init_Trigger(int hCamera,tSdkCameraCapbility * pCameraInfo);
+    int  GUI_init_Trigger(int hCamera,tSdkCameraCapbility * pCameraInfo);
 //
 private slots:
 //    void on_radioButton_trigger_hardware_clicked(bool checked);
@@ -87,6 +87,11 @@ private slots:
 
     void Image_process(QImage img);
     void camera_statues();
+	void on_res_combobox_activated(int index);
+	void on_radioButton_collect_clicked(bool checked);
+	void on_radioButton_software_trigger_clicked(bool);
+	void on_radioButton_hardware_trigger_clicked(bool);
+	void on_software_trigger_once_button_clicked();
 //
 //    void on_radioButton_A_clicked(bool checked);
 //    void on_exposure_mode_manual_clicked(bool checked);

@@ -129,7 +129,6 @@ void MainWindow::camera_statues()
 *
 *
 */
-
 void MainWindow::Image_process(QImage img)
 {
 
@@ -173,12 +172,15 @@ int  MainWindow::GUI_init_Resolution(int hCamera, tSdkCameraCapbility * pCameraI
 	for (i = 0;i<iImageSizeDesc;i++) {
 		ui->res_combobox->addItem(QString("%1").arg(pImageSizeDesc[i].acDescription));
 	}
+	connect(ui->res_combobox, SIGNAL(QComboBox::activated(int)), this, SLOT(on_res_combobox_activated(int)));
 	return 1;
 }
 
 int MainWindow::GUI_init_parameter(int hCamera, tSdkCameraCapbility *pCamerInfo)
 {
 	GUI_set_Resolution(hCamera, pCamerInfo);
+	//GUI_init_Trigger(hCamera, pCamerInfo);
+	GUI_init_exposure(hCamera, pCamerInfo);
 	return 0;
 }
 
@@ -194,5 +196,148 @@ int MainWindow::GUI_set_Resolution(int hCamera, tSdkCameraCapbility *pCameraInfo
 	g_W_H_INFO.buffer_size = g_W_H_INFO.sensor_width * g_W_H_INFO.sensor_height;
 
 	ui->res_combobox->setCurrentIndex(sResolution.iIndex);
+	return 1;
+}
+
+void MainWindow::on_res_combobox_activated(int index)
+{
+
+	tSdkImageResolution   *pImageSizeDesc = g_tCapability.pImageSizeDesc;// 预设分辨率选择
+
+	g_W_H_INFO.sensor_width = pImageSizeDesc[index].iWidth;
+	g_W_H_INFO.sensor_height = pImageSizeDesc[index].iHeight;
+	g_W_H_INFO.buffer_size = g_W_H_INFO.sensor_width*g_W_H_INFO.sensor_height;
+
+
+	if (pImageSizeDesc[index].iWidthZoomSw) {
+		g_W_H_INFO.sensor_width = pImageSizeDesc[index].iWidthZoomSw;
+		g_W_H_INFO.sensor_height = pImageSizeDesc[index].iHeightZoomSw;
+	}
+
+	if (g_W_H_INFO.sensor_width < g_W_H_INFO.display_width) {
+		g_W_H_INFO.xOffsetFOV = (g_W_H_INFO.display_width - g_W_H_INFO.sensor_width) / 2;
+	}
+	else {
+		g_W_H_INFO.xOffsetFOV = 0;
+	}
+	if (g_W_H_INFO.sensor_height < g_W_H_INFO.display_height) {
+		g_W_H_INFO.yOffsetFOV = (g_W_H_INFO.display_height - g_W_H_INFO.sensor_height) / 2;
+	}
+	else {
+		g_W_H_INFO.yOffsetFOV = 0;
+	}
+	m_thread->pause();
+	//设置预览的分辨率。
+	CameraSetImageResolution(g_hCamera, &(pImageSizeDesc[index]));
+	m_thread->stream();
+	//ui->gvMain->scale(1/1.5,1/1.5);
+}
+
+int MainWindow::GUI_init_Trigger(int hCamera, tSdkCameraCapbility * pCameraInfo)
+{
+	int pbySnapMode;
+	int StrobeMode = 0;
+	int uPolarity = 0;
+	//获得相机的触发模式
+	CameraGetTriggerMode(hCamera, &pbySnapMode);
+	//设置相机的触发模式。0代表持续采集模式，1表示软件触发模式，2表示硬件触发模式
+	switch (pbySnapMode)
+	{
+	case 0:
+		ui->radioButton_collect->setChecked(true);
+		ui->software_trigger_once_button->setEnabled(false);
+		break;
+	case 1:
+		ui->radioButton_software_trigger->setChecked(true);
+		ui->software_trigger_once_button->setEnabled(true);
+		break;
+	case 2:
+		ui->radioButton_hardware_trigger->setChecked(true);
+		ui->software_trigger_once_button->setEnabled(false);
+
+		CameraGetStrobeMode(hCamera, &StrobeMode);		//获得当前STROBE信号设置的模式
+		CameraGetStrobePolarity(hCamera, &uPolarity);	//获得相机当前STROBE信号的有效极性。默认为高电平有效
+
+		if (StrobeMode)
+			CameraSetStrobePolarity(hCamera, 1);
+		else
+			CameraSetStrobePolarity(hCamera, 0);
+		break;
+	default:
+		ui->radioButton_software_trigger->setChecked(true);
+		ui->software_trigger_once_button->setEnabled(true);
+		break;
+	}
+	QObject::connect(ui->radioButton_collect, SIGNAL(clicked(bool)), this, SLOT(on_radioButton_collect_clicked(bool)));
+	QObject::connect(ui->radioButton_software_trigger, SIGNAL(clicked(bool)), this, SLOT(on_radioButton_software_trigger_clicked(bool)));
+	QObject::connect(ui->radioButton_hardware_trigger, SIGNAL(clicked(bool)), this, SLOT(on_radioButton_hardware_trigger_clicked(bool)));
+	QObject::connect(ui->software_trigger_once_button, SIGNAL(clicked()), this, SLOT(on_software_trigger_once_button_clicked()));
+	return 1;
+}
+
+void MainWindow::on_radioButton_collect_clicked(bool checked)
+{
+	ui->radioButton_collect->setChecked(true);
+	if (checked)
+	{
+		//获得相机的触发模式。
+		CameraSetTriggerMode(g_hCamera, 0);
+		ui->radioButton_collect->setChecked(true);
+		ui->software_trigger_once_button->setEnabled(false);
+	}
+}
+
+void MainWindow::on_radioButton_software_trigger_clicked(bool checked)
+{
+	ui->radioButton_software_trigger->setChecked(true);
+	if (checked)
+	{
+		//设置相机的触发模式。
+		CameraSetTriggerMode(g_hCamera, 1);
+
+		//设置相机的触发模式。0表示连续采集模式；1表示软件触发模式；2表示硬件触发模式。
+
+		ui->radioButton_software_trigger->setChecked(true);
+		ui->software_trigger_once_button->setEnabled(true);
+	}
+}
+
+void MainWindow::on_radioButton_hardware_trigger_clicked(bool checked)
+{
+	int StrobeMode = 0;
+	int  uPolarity = 0;
+
+	ui->radioButton_hardware_trigger->setChecked(true);
+	if (checked)
+	{
+		//获得相机的触发模式。
+		CameraSetTriggerMode(g_hCamera, 2);
+
+		//设置相机的触发模式。0表示连续采集模式；1表示软件触发模式；2表示硬件触发模式。
+		ui->software_trigger_once_button->setEnabled(false);
+
+		CameraGetStrobeMode(g_hCamera, &StrobeMode);
+		CameraGetStrobePolarity(g_hCamera, &uPolarity);
+		if (StrobeMode) 
+		{
+			CameraSetStrobePolarity(g_hCamera, 1);
+			if (uPolarity) 
+				CameraSetStrobePolarity(g_hCamera, 1);
+			else
+				CameraSetStrobePolarity(g_hCamera, 0);
+		}
+		else
+			CameraSetStrobePolarity(g_hCamera, 0);
+	}
+}
+
+void MainWindow::on_software_trigger_once_button_clicked()
+{
+	//执行一次软触发。执行后，会触发由CameraSetTriggerCount指定的帧数。
+	CameraSoftTrigger(g_hCamera);
+}
+
+int MainWindow::GUI_init_exposure(int hCamera, tSdkCameraCapbility * pCameraInfo)
+{
 	return 1;
 }
