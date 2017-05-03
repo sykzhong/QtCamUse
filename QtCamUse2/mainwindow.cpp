@@ -172,14 +172,14 @@ int  MainWindow::GUI_init_Resolution(int hCamera, tSdkCameraCapbility * pCameraI
 	for (i = 0;i<iImageSizeDesc;i++) {
 		ui->res_combobox->addItem(QString("%1").arg(pImageSizeDesc[i].acDescription));
 	}
-	connect(ui->res_combobox, SIGNAL(QComboBox::activated(int)), this, SLOT(on_res_combobox_activated(int)));
+	connect(ui->res_combobox, SIGNAL(QComboBox::activated(int)), this, SLOT(slot_res_combobox_activated(int)));
 	return 1;
 }
 
 int MainWindow::GUI_init_parameter(int hCamera, tSdkCameraCapbility *pCamerInfo)
 {
 	GUI_set_Resolution(hCamera, pCamerInfo);
-	//GUI_init_Trigger(hCamera, pCamerInfo);
+	GUI_init_Trigger(hCamera, pCamerInfo);
 	GUI_init_exposure(hCamera, pCamerInfo);
 	return 0;
 }
@@ -199,7 +199,7 @@ int MainWindow::GUI_set_Resolution(int hCamera, tSdkCameraCapbility *pCameraInfo
 	return 1;
 }
 
-void MainWindow::on_res_combobox_activated(int index)
+void MainWindow::slot_res_combobox_activated(int index)
 {
 
 	tSdkImageResolution   *pImageSizeDesc = g_tCapability.pImageSizeDesc;// 预设分辨率选择
@@ -235,6 +235,9 @@ void MainWindow::on_res_combobox_activated(int index)
 
 int MainWindow::GUI_init_Trigger(int hCamera, tSdkCameraCapbility * pCameraInfo)
 {
+	/*
+	未为自动曝光模式设置抗频闪等功能
+	*/
 	int pbySnapMode;
 	int StrobeMode = 0;
 	int uPolarity = 0;
@@ -268,14 +271,14 @@ int MainWindow::GUI_init_Trigger(int hCamera, tSdkCameraCapbility * pCameraInfo)
 		ui->software_trigger_once_button->setEnabled(true);
 		break;
 	}
-	QObject::connect(ui->radioButton_collect, SIGNAL(clicked(bool)), this, SLOT(on_radioButton_collect_clicked(bool)));
-	QObject::connect(ui->radioButton_software_trigger, SIGNAL(clicked(bool)), this, SLOT(on_radioButton_software_trigger_clicked(bool)));
-	QObject::connect(ui->radioButton_hardware_trigger, SIGNAL(clicked(bool)), this, SLOT(on_radioButton_hardware_trigger_clicked(bool)));
-	QObject::connect(ui->software_trigger_once_button, SIGNAL(clicked()), this, SLOT(on_software_trigger_once_button_clicked()));
+	QObject::connect(ui->radioButton_collect, SIGNAL(clicked(bool)), this, SLOT(slot_radioButton_collect_clicked(bool)));
+	QObject::connect(ui->radioButton_software_trigger, SIGNAL(clicked(bool)), this, SLOT(slot_radioButton_software_trigger_clicked(bool)));
+	QObject::connect(ui->radioButton_hardware_trigger, SIGNAL(clicked(bool)), this, SLOT(slot_radioButton_hardware_trigger_clicked(bool)));
+	QObject::connect(ui->software_trigger_once_button, SIGNAL(clicked()), this, SLOT(slot_software_trigger_once_button_clicked()));
 	return 1;
 }
 
-void MainWindow::on_radioButton_collect_clicked(bool checked)
+void MainWindow::slot_radioButton_collect_clicked(bool checked)
 {
 	ui->radioButton_collect->setChecked(true);
 	if (checked)
@@ -287,7 +290,7 @@ void MainWindow::on_radioButton_collect_clicked(bool checked)
 	}
 }
 
-void MainWindow::on_radioButton_software_trigger_clicked(bool checked)
+void MainWindow::slot_radioButton_software_trigger_clicked(bool checked)
 {
 	ui->radioButton_software_trigger->setChecked(true);
 	if (checked)
@@ -302,7 +305,7 @@ void MainWindow::on_radioButton_software_trigger_clicked(bool checked)
 	}
 }
 
-void MainWindow::on_radioButton_hardware_trigger_clicked(bool checked)
+void MainWindow::slot_radioButton_hardware_trigger_clicked(bool checked)
 {
 	int StrobeMode = 0;
 	int  uPolarity = 0;
@@ -331,7 +334,7 @@ void MainWindow::on_radioButton_hardware_trigger_clicked(bool checked)
 	}
 }
 
-void MainWindow::on_software_trigger_once_button_clicked()
+void MainWindow::slot_software_trigger_once_button_clicked()
 {
 	//执行一次软触发。执行后，会触发由CameraSetTriggerCount指定的帧数。
 	CameraSoftTrigger(g_hCamera);
@@ -339,5 +342,149 @@ void MainWindow::on_software_trigger_once_button_clicked()
 
 int MainWindow::GUI_init_exposure(int hCamera, tSdkCameraCapbility * pCameraInfo)
 {
+	BOOL            AEstate = FALSE;
+	//int             pbyAeTarget;			//亮度目标值
+	//BOOL            FlickEnable = FALSE;	//抗频闪使能状态
+	//int             piFrequencySel;			//抗频闪频率值
+	double          pfExposureTime;		
+	int             pusAnalogGain;
+	double	        m_fExpLineTime = 0;//当前的行曝光时间，单位为us
+	tSdkExpose      *  SdkExpose = &pCameraInfo->sExposeDesc;
+
+	//获得相机当前的曝光模式。
+	CameraGetAeState(hCamera, &AEstate);
+
+	////获得自动曝光的亮度目标值。
+	//CameraGetAeTarget(hCamera, &pbyAeTarget);
+
+	////获得自动曝光时抗频闪功能的使能状态。
+	//CameraGetAntiFlick(hCamera, &FlickEnable);
+
+	//获得自动曝光时，消频闪的频率选择。
+	//CameraGetLightFrequency(hCamera, &piFrequencySel);
+
+	//获得相机的曝光时间。
+	CameraGetExposureTime(hCamera, &pfExposureTime);
+
+	//获得图像信号的模拟增益值。
+	CameraGetAnalogGain(hCamera, &pusAnalogGain);
+
+	/*
+	获得一行的曝光时间。对于CMOS传感器，其曝光
+	的单位是按照行来计算的，因此，曝光时间并不能在微秒
+	级别连续可调。而是会按照整行来取舍。这个函数的
+	作用就是返回CMOS相机曝光一行对应的时间。
+	*/
+	CameraGetExposureLineTime(hCamera, &m_fExpLineTime);
+
+	connect(ui->horizontalSlider_gain, SIGNAL(valueChanged(int)), ui->spinBox_gain, SLOT(setValue(int)));
+	connect(ui->spinBox_gain, SIGNAL(valueChanged(int)), ui->horizontalSlider_gain, SLOT(setValue(int)));
+
+	ui->horizontalSlider_gain->setMinimum(SdkExpose->uiAnalogGainMin);
+	ui->horizontalSlider_gain->setMaximum(SdkExpose->uiAnalogGainMax);
+	ui->spinBox_gain->setMinimum(SdkExpose->uiExposeTimeMin);
+	ui->spinBox_gain->setMaximum(SdkExpose->uiExposeTimeMax);
+
+	exposure_time_lineedit_status = false;
+
+	ui->horizontalSlider_exposure_time->setMinimum(SdkExpose->uiExposeTimeMin);
+	ui->horizontalSlider_exposure_time->setMaximum(SdkExpose->uiExposeTimeMax);
+	ui->horizontalSlider_exposure_time->setValue(pfExposureTime / m_fExpLineTime);
+
+	if (!AEstate)
+	{
+		//设置相机曝光的模式。自动或者手动。关
+		CameraSetAeState(hCamera, false);
+		ui->exposure_manual->setEnabled(true);
+		ui->exposure_mode_manual->setChecked(true);
+	}
+	else
+	{
+		CameraSetAeState(hCamera, true);
+		ui->exposure_manual->setEnabled(false);
+		ui->exposure_mode_auto->setChecked(true);
+	}
+
+	connect(ui->exposure_mode_auto, SIGNAL(clicked(bool)), this, SLOT(slot_exposure_mode_auto_clicked(bool)));
+	connect(ui->exposure_mode_manual, SIGNAL(clicked(bool)), this, SLOT(slot_exposure_mode_manual_clicked(bool)));
+	connect(ui->horizontalSlider_gain, SIGNAL(valueChanged(int)), this, SLOT(slot_horizontalSlider_gain_valueChanged(int)));
+	connect(ui->horizontalSlider_exposure_time, SIGNAL(valueChanged(int)), this, SLOT(slot_horizontalSlider_exposure_time_valueChanged(int)));
+
 	return 1;
+}
+
+void MainWindow::slot_exposure_mode_auto_clicked(bool checked)
+{
+	ui->exposure_mode_auto->setChecked(true);
+	if (checked)
+	{
+		ui->exposure_manual->setEnabled(false);
+		CameraSetAeState(g_hCamera, true);
+	}
+}
+
+void MainWindow::slot_exposure_mode_manual_clicked(bool checked)
+{
+	double          pfExposureTime;
+	int             pusAnalogGain;
+	double	    m_fExpLineTime = 0;//当前的行曝光时间，单位为us
+	ui->exposure_mode_manual->setChecked(false);
+	if (checked)
+	{
+		//获得相机的曝光时间。
+		CameraGetExposureTime(g_hCamera, &pfExposureTime);
+
+		//获得图像信号的模拟增益值。
+		CameraGetAnalogGain(g_hCamera, &pusAnalogGain);
+
+		/*
+		获得一行的曝光时间。对于CMOS传感器，其曝光
+		的单位是按照行来计算的，因此，曝光时间并不能在微秒
+		级别连续可调。而是会按照整行来取舍。这个函数的
+		作用就是返回CMOS相机曝光一行对应的时间。
+		*/
+		CameraGetExposureLineTime(g_hCamera, &m_fExpLineTime);
+
+		ui->horizontalSlider_gain->setValue(pusAnalogGain);
+		ui->horizontalSlider_exposure_time->setValue(pfExposureTime / m_fExpLineTime);
+
+		ui->exposure_manual->setEnabled(true);
+		CameraSetAeState(g_hCamera, false);
+	}
+}
+//手动曝光 增益
+void MainWindow::slot_horizontalSlider_gain_valueChanged(int value)
+{
+	/*
+	设置相机的图像模拟增益值。该值乘以CameraGetCapability获得
+	的相机属性结构体中sExposeDesc.fAnalogGainStep，就
+	得到实际的图像信号放大倍数。
+	*/
+	CameraSetAnalogGain(g_hCamera, value);
+}
+
+void MainWindow::slot_horizontalSlider_exposure_time_valueChanged(int value)
+{
+	double          m_fExpLineTime = 0;//当前的行曝光时间，单位为us
+	char            buffer[16];
+	/*
+	获得一行的曝光时间。对于CMOS传感器，其曝光
+	的单位是按照行来计算的，因此，曝光时间并不能在微秒M
+	级别连续可调。而是会按照整行来取舍。这个函数的
+	作用就是返回CMOS相机曝光一行对应的时间。
+	*/
+	CameraGetExposureLineTime(g_hCamera, &m_fExpLineTime);
+	/*
+	设置曝光时间。单位为微秒。对于CMOS传感器，其曝光
+	的单位是按照行来计算的，因此，曝光时间并不能在微秒
+	级别连续可调。而是会按照整行来取舍。在调用
+	本函数设定曝光时间后，建议再调用CameraGetExposureTime
+	来获得实际设定的值。
+	*/
+	CameraSetExposureTime(g_hCamera, value*m_fExpLineTime);
+	if (!exposure_time_lineedit_status) {
+		//除以1000是换算成毫秒
+		sprintf(buffer, "%0.3f", ((value*m_fExpLineTime) / 1000));
+		ui->lineEdit_exposure_time->setText(QString(buffer));
+	}
 }
