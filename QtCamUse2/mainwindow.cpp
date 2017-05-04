@@ -176,11 +176,12 @@ int  MainWindow::GUI_init_Resolution(int hCamera, tSdkCameraCapbility * pCameraI
 	return 1;
 }
 
-int MainWindow::GUI_init_parameter(int hCamera, tSdkCameraCapbility *pCamerInfo)
+int MainWindow::GUI_init_parameter(int hCamera, tSdkCameraCapbility *pCameraInfo)
 {
-	GUI_set_Resolution(hCamera, pCamerInfo);
-	GUI_init_Trigger(hCamera, pCamerInfo);
-	GUI_init_exposure(hCamera, pCamerInfo);
+	GUI_set_Resolution(hCamera, pCameraInfo);
+	GUI_init_Trigger(hCamera, pCameraInfo);
+	GUI_init_exposure(hCamera, pCameraInfo);
+	GUI_init_isp(hCamera, pCameraInfo);
 	return 0;
 }
 
@@ -275,6 +276,32 @@ int MainWindow::GUI_init_Trigger(int hCamera, tSdkCameraCapbility * pCameraInfo)
 	QObject::connect(ui->radioButton_software_trigger, SIGNAL(clicked(bool)), this, SLOT(slot_radioButton_software_trigger_clicked(bool)));
 	QObject::connect(ui->radioButton_hardware_trigger, SIGNAL(clicked(bool)), this, SLOT(slot_radioButton_hardware_trigger_clicked(bool)));
 	QObject::connect(ui->software_trigger_once_button, SIGNAL(clicked()), this, SLOT(slot_software_trigger_once_button_clicked()));
+	return 1;
+}
+
+int MainWindow::GUI_init_isp(int hCamera, tSdkCameraCapbility * pCameraInfo)
+{
+	BOOL        m_bHflip = FALSE;
+	BOOL        m_bVflip = FALSE;
+
+	//获得图像的镜像状态。
+	CameraGetMirror(hCamera, MIRROR_DIRECTION_HORIZONTAL, &m_bHflip);
+	CameraGetMirror(hCamera, MIRROR_DIRECTION_VERTICAL, &m_bVflip);
+
+	//设置选中内容
+	if (m_bHflip) {
+		ui->checkBox_isp_h->setChecked(true);
+	}
+	else {
+		ui->checkBox_isp_h->setChecked(false);
+	}
+	if (m_bVflip) {
+		ui->checkBox_isp_v->setChecked(true);
+	}
+	else {
+		ui->checkBox_isp_v->setChecked(false);
+	}
+
 	return 1;
 }
 
@@ -518,4 +545,32 @@ void MainWindow::closeEvent(QCloseEvent * e)
 	}
 
 	QMainWindow::closeEvent(e);
+}
+
+void MainWindow::on_pushButton_AWB_once_clicked()
+{
+	CameraSetOnceWB(g_hCamera);
+}
+
+//水平镜像
+void MainWindow::on_checkBox_isp_h_clicked(bool checked)
+{
+	if (checked) 
+		//设置图像镜像操作。镜像操作分为水平和垂直两个方向。水平
+		CameraSetMirror(g_hCamera, MIRROR_DIRECTION_HORIZONTAL, true);
+	else 
+		//设置图像镜像操作。镜像操作分为水平和垂直两个方向。水平
+		CameraSetMirror(g_hCamera, MIRROR_DIRECTION_HORIZONTAL, false);
+
+}
+
+//垂直镜像
+void MainWindow::on_checkBox_isp_v_clicked(bool checked)
+{
+	if (checked)
+		//设置图像镜像操作。镜像操作分为水平和垂直两个方向。垂直
+		CameraSetMirror(g_hCamera, MIRROR_DIRECTION_VERTICAL, true);
+	else
+		//设置图像镜像操作。镜像操作分为水平和垂直两个方向。垂直
+		CameraSetMirror(g_hCamera, MIRROR_DIRECTION_VERTICAL, false);
 }

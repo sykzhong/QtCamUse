@@ -28,7 +28,7 @@
     <property name="geometry">
      <rect>
       <x>830</x>
-      <y>20</y>
+      <y>120</y>
       <width>161</width>
       <height>45</height>
      </rect>
@@ -57,7 +57,7 @@
         <x>5</x>
         <y>7</y>
         <width>151</width>
-        <height>30</height>
+        <height>31</height>
        </rect>
       </property>
      </widget>
@@ -67,7 +67,7 @@
     <property name="geometry">
      <rect>
       <x>840</x>
-      <y>10</y>
+      <y>110</y>
       <width>54</width>
       <height>12</height>
      </rect>
@@ -81,8 +81,8 @@
      <rect>
       <x>1000</x>
       <y>10</y>
-      <width>141</width>
-      <height>111</height>
+      <width>121</width>
+      <height>151</height>
      </rect>
     </property>
     <property name="frameShape">
@@ -96,7 +96,7 @@
       <rect>
        <x>0</x>
        <y>0</y>
-       <width>141</width>
+       <width>121</width>
        <height>111</height>
       </rect>
      </property>
@@ -160,8 +160,8 @@
    <widget class="QFrame" name="exp_frame">
     <property name="geometry">
      <rect>
-      <x>830</x>
-      <y>130</y>
+      <x>840</x>
+      <y>210</y>
       <width>291</width>
       <height>141</height>
      </rect>
@@ -316,14 +316,124 @@
    <widget class="QLabel" name="label">
     <property name="geometry">
      <rect>
-      <x>840</x>
-      <y>120</y>
+      <x>850</x>
+      <y>200</y>
       <width>54</width>
       <height>12</height>
      </rect>
     </property>
     <property name="text">
      <string>曝光设置</string>
+    </property>
+   </widget>
+   <widget class="QFrame" name="wb_frame">
+    <property name="geometry">
+     <rect>
+      <x>830</x>
+      <y>20</y>
+      <width>161</width>
+      <height>35</height>
+     </rect>
+    </property>
+    <property name="frameShape">
+     <enum>QFrame::StyledPanel</enum>
+    </property>
+    <property name="frameShadow">
+     <enum>QFrame::Raised</enum>
+    </property>
+    <widget class="QPushButton" name="pushButton_AWB_once">
+     <property name="geometry">
+      <rect>
+       <x>5</x>
+       <y>7</y>
+       <width>151</width>
+       <height>23</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>一键白平衡</string>
+     </property>
+    </widget>
+   </widget>
+   <widget class="QLabel" name="label_4">
+    <property name="geometry">
+     <rect>
+      <x>840</x>
+      <y>10</y>
+      <width>71</width>
+      <height>16</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>ISP颜色处理</string>
+    </property>
+   </widget>
+   <widget class="QFrame" name="isp_frame">
+    <property name="geometry">
+     <rect>
+      <x>830</x>
+      <y>70</y>
+      <width>161</width>
+      <height>35</height>
+     </rect>
+    </property>
+    <property name="frameShape">
+     <enum>QFrame::StyledPanel</enum>
+    </property>
+    <property name="frameShadow">
+     <enum>QFrame::Raised</enum>
+    </property>
+    <widget class="QGroupBox" name="groupBox_4">
+     <property name="geometry">
+      <rect>
+       <x>0</x>
+       <y>0</y>
+       <width>161</width>
+       <height>35</height>
+      </rect>
+     </property>
+     <property name="title">
+      <string/>
+     </property>
+     <widget class="QCheckBox" name="checkBox_isp_h">
+      <property name="geometry">
+       <rect>
+        <x>10</x>
+        <y>10</y>
+        <width>71</width>
+        <height>16</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>水平镜像</string>
+      </property>
+     </widget>
+     <widget class="QCheckBox" name="checkBox_isp_v">
+      <property name="geometry">
+       <rect>
+        <x>90</x>
+        <y>10</y>
+        <width>71</width>
+        <height>16</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>垂直镜像</string>
+      </property>
+     </widget>
+    </widget>
+   </widget>
+   <widget class="QLabel" name="label_5">
+    <property name="geometry">
+     <rect>
+      <x>840</x>
+      <y>60</y>
+      <width>71</width>
+      <height>16</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>ISP图像处理</string>
     </property>
    </widget>
   </widget>

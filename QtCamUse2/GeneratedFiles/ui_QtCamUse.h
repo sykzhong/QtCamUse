@@ -13,6 +13,7 @@
 #include <QtWidgets/QAction>
 #include <QtWidgets/QApplication>
 #include <QtWidgets/QButtonGroup>
+#include <QtWidgets/QCheckBox>
 #include <QtWidgets/QComboBox>
 #include <QtWidgets/QFrame>
 #include <QtWidgets/QGraphicsView>
@@ -58,6 +59,14 @@ public:
     QSlider *horizontalSlider_exposure_time;
     QLineEdit *lineEdit_exposure_time;
     QLabel *label;
+    QFrame *wb_frame;
+    QPushButton *pushButton_AWB_once;
+    QLabel *label_4;
+    QFrame *isp_frame;
+    QGroupBox *groupBox_4;
+    QCheckBox *checkBox_isp_h;
+    QCheckBox *checkBox_isp_v;
+    QLabel *label_5;
     QStatusBar *statusBar;
 
     void setupUi(QMainWindow *QtCamUseClass)
@@ -72,7 +81,7 @@ public:
         gvMain->setGeometry(QRect(10, 0, 800, 600));
         res_frame = new QFrame(centralWidget);
         res_frame->setObjectName(QStringLiteral("res_frame"));
-        res_frame->setGeometry(QRect(830, 20, 161, 45));
+        res_frame->setGeometry(QRect(830, 120, 161, 45));
         res_frame->setFrameShape(QFrame::StyledPanel);
         res_frame->setFrameShadow(QFrame::Raised);
         groupBox_6 = new QGroupBox(res_frame);
@@ -80,18 +89,18 @@ public:
         groupBox_6->setGeometry(QRect(0, 0, 161, 45));
         res_combobox = new QComboBox(groupBox_6);
         res_combobox->setObjectName(QStringLiteral("res_combobox"));
-        res_combobox->setGeometry(QRect(5, 7, 151, 30));
+        res_combobox->setGeometry(QRect(5, 7, 151, 31));
         label_25 = new QLabel(centralWidget);
         label_25->setObjectName(QStringLiteral("label_25"));
-        label_25->setGeometry(QRect(840, 10, 54, 12));
+        label_25->setGeometry(QRect(840, 110, 54, 12));
         trigger_fram = new QFrame(centralWidget);
         trigger_fram->setObjectName(QStringLiteral("trigger_fram"));
-        trigger_fram->setGeometry(QRect(1000, 10, 141, 111));
+        trigger_fram->setGeometry(QRect(1000, 10, 121, 151));
         trigger_fram->setFrameShape(QFrame::StyledPanel);
         trigger_fram->setFrameShadow(QFrame::Raised);
         groupBox = new QGroupBox(trigger_fram);
         groupBox->setObjectName(QStringLiteral("groupBox"));
-        groupBox->setGeometry(QRect(0, 0, 141, 111));
+        groupBox->setGeometry(QRect(0, 0, 121, 111));
         radioButton_collect = new QRadioButton(groupBox);
         radioButton_collect->setObjectName(QStringLiteral("radioButton_collect"));
         radioButton_collect->setGeometry(QRect(10, 20, 89, 16));
@@ -106,7 +115,7 @@ public:
         radioButton_hardware_trigger->setGeometry(QRect(10, 60, 89, 16));
         exp_frame = new QFrame(centralWidget);
         exp_frame->setObjectName(QStringLiteral("exp_frame"));
-        exp_frame->setGeometry(QRect(830, 130, 291, 141));
+        exp_frame->setGeometry(QRect(840, 210, 291, 141));
         exp_frame->setFrameShape(QFrame::StyledPanel);
         exp_frame->setFrameShadow(QFrame::Raised);
         groupBox_2 = new QGroupBox(exp_frame);
@@ -148,7 +157,35 @@ public:
         lineEdit_exposure_time->setGeometry(QRect(220, 40, 41, 20));
         label = new QLabel(centralWidget);
         label->setObjectName(QStringLiteral("label"));
-        label->setGeometry(QRect(840, 120, 54, 12));
+        label->setGeometry(QRect(850, 200, 54, 12));
+        wb_frame = new QFrame(centralWidget);
+        wb_frame->setObjectName(QStringLiteral("wb_frame"));
+        wb_frame->setGeometry(QRect(830, 20, 161, 35));
+        wb_frame->setFrameShape(QFrame::StyledPanel);
+        wb_frame->setFrameShadow(QFrame::Raised);
+        pushButton_AWB_once = new QPushButton(wb_frame);
+        pushButton_AWB_once->setObjectName(QStringLiteral("pushButton_AWB_once"));
+        pushButton_AWB_once->setGeometry(QRect(5, 7, 151, 23));
+        label_4 = new QLabel(centralWidget);
+        label_4->setObjectName(QStringLiteral("label_4"));
+        label_4->setGeometry(QRect(840, 10, 71, 16));
+        isp_frame = new QFrame(centralWidget);
+        isp_frame->setObjectName(QStringLiteral("isp_frame"));
+        isp_frame->setGeometry(QRect(830, 70, 161, 35));
+        isp_frame->setFrameShape(QFrame::StyledPanel);
+        isp_frame->setFrameShadow(QFrame::Raised);
+        groupBox_4 = new QGroupBox(isp_frame);
+        groupBox_4->setObjectName(QStringLiteral("groupBox_4"));
+        groupBox_4->setGeometry(QRect(0, 0, 161, 35));
+        checkBox_isp_h = new QCheckBox(groupBox_4);
+        checkBox_isp_h->setObjectName(QStringLiteral("checkBox_isp_h"));
+        checkBox_isp_h->setGeometry(QRect(10, 10, 71, 16));
+        checkBox_isp_v = new QCheckBox(groupBox_4);
+        checkBox_isp_v->setObjectName(QStringLiteral("checkBox_isp_v"));
+        checkBox_isp_v->setGeometry(QRect(90, 10, 71, 16));
+        label_5 = new QLabel(centralWidget);
+        label_5->setObjectName(QStringLiteral("label_5"));
+        label_5->setGeometry(QRect(840, 60, 71, 16));
         QtCamUseClass->setCentralWidget(centralWidget);
         statusBar = new QStatusBar(QtCamUseClass);
         statusBar->setObjectName(QStringLiteral("statusBar"));
@@ -176,6 +213,12 @@ public:
         label_2->setText(QApplication::translate("QtCamUseClass", "\345\242\236\347\233\212", Q_NULLPTR));
         label_3->setText(QApplication::translate("QtCamUseClass", "\346\233\235\345\205\211\346\227\266\351\227\264", Q_NULLPTR));
         label->setText(QApplication::translate("QtCamUseClass", "\346\233\235\345\205\211\350\256\276\347\275\256", Q_NULLPTR));
+        pushButton_AWB_once->setText(QApplication::translate("QtCamUseClass", "\344\270\200\351\224\256\347\231\275\345\271\263\350\241\241", Q_NULLPTR));
+        label_4->setText(QApplication::translate("QtCamUseClass", "ISP\351\242\234\350\211\262\345\244\204\347\220\206", Q_NULLPTR));
+        groupBox_4->setTitle(QString());
+        checkBox_isp_h->setText(QApplication::translate("QtCamUseClass", "\346\260\264\345\271\263\351\225\234\345\203\217", Q_NULLPTR));
+        checkBox_isp_v->setText(QApplication::translate("QtCamUseClass", "\345\236\202\347\233\264\351\225\234\345\203\217", Q_NULLPTR));
+        label_5->setText(QApplication::translate("QtCamUseClass", "ISP\345\233\276\345\203\217\345\244\204\347\220\206", Q_NULLPTR));
     } // retranslateUi
 
 };
