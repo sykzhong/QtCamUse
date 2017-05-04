@@ -106,7 +106,7 @@ public:
         radioButton_hardware_trigger->setGeometry(QRect(10, 60, 89, 16));
         exp_frame = new QFrame(centralWidget);
         exp_frame->setObjectName(QStringLiteral("exp_frame"));
-        exp_frame->setGeometry(QRect(830, 130, 291, 151));
+        exp_frame->setGeometry(QRect(830, 130, 291, 141));
         exp_frame->setFrameShape(QFrame::StyledPanel);
         exp_frame->setFrameShadow(QFrame::Raised);
         groupBox_2 = new QGroupBox(exp_frame);
@@ -120,12 +120,12 @@ public:
         exposure_mode_manual->setGeometry(QRect(90, 10, 89, 16));
         exposure_manual = new QFrame(exp_frame);
         exposure_manual->setObjectName(QStringLiteral("exposure_manual"));
-        exposure_manual->setGeometry(QRect(0, 70, 271, 81));
+        exposure_manual->setGeometry(QRect(10, 60, 271, 71));
         exposure_manual->setFrameShape(QFrame::StyledPanel);
         exposure_manual->setFrameShadow(QFrame::Raised);
-        groupBox_3 = new QGroupBox(exp_frame);
+        groupBox_3 = new QGroupBox(exposure_manual);
         groupBox_3->setObjectName(QStringLiteral("groupBox_3"));
-        groupBox_3->setGeometry(QRect(10, 60, 271, 81));
+        groupBox_3->setGeometry(QRect(0, 0, 271, 81));
         horizontalSlider_gain = new QSlider(groupBox_3);
         horizontalSlider_gain->setObjectName(QStringLiteral("horizontalSlider_gain"));
         horizontalSlider_gain->setGeometry(QRect(60, 10, 151, 19));

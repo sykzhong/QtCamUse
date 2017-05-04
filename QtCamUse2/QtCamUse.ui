@@ -163,7 +163,7 @@
       <x>830</x>
       <y>130</y>
       <width>291</width>
-      <height>151</height>
+      <height>141</height>
      </rect>
     </property>
     <property name="frameShape">
@@ -214,10 +214,10 @@
     <widget class="QFrame" name="exposure_manual">
      <property name="geometry">
       <rect>
-       <x>0</x>
-       <y>70</y>
+       <x>10</x>
+       <y>60</y>
        <width>271</width>
-       <height>81</height>
+       <height>71</height>
       </rect>
      </property>
      <property name="frameShape">
@@ -226,90 +226,90 @@
      <property name="frameShadow">
       <enum>QFrame::Raised</enum>
      </property>
-    </widget>
-    <widget class="QGroupBox" name="groupBox_3">
-     <property name="geometry">
-      <rect>
-       <x>10</x>
-       <y>60</y>
-       <width>271</width>
-       <height>81</height>
-      </rect>
-     </property>
-     <property name="title">
-      <string/>
-     </property>
-     <widget class="QSlider" name="horizontalSlider_gain">
+     <widget class="QGroupBox" name="groupBox_3">
       <property name="geometry">
        <rect>
-        <x>60</x>
-        <y>10</y>
-        <width>151</width>
-        <height>19</height>
+        <x>0</x>
+        <y>0</y>
+        <width>271</width>
+        <height>81</height>
        </rect>
       </property>
-      <property name="orientation">
-       <enum>Qt::Horizontal</enum>
+      <property name="title">
+       <string/>
       </property>
-     </widget>
-     <widget class="QLabel" name="label_2">
-      <property name="geometry">
-       <rect>
-        <x>9</x>
-        <y>13</y>
-        <width>54</width>
-        <height>12</height>
-       </rect>
-      </property>
-      <property name="text">
-       <string>增益</string>
-      </property>
-     </widget>
-     <widget class="QSpinBox" name="spinBox_gain">
-      <property name="geometry">
-       <rect>
-        <x>220</x>
-        <y>10</y>
-        <width>42</width>
-        <height>22</height>
-       </rect>
-      </property>
-     </widget>
-     <widget class="QLabel" name="label_3">
-      <property name="geometry">
-       <rect>
-        <x>8</x>
-        <y>43</y>
-        <width>54</width>
-        <height>12</height>
-       </rect>
-      </property>
-      <property name="text">
-       <string>曝光时间</string>
-      </property>
-     </widget>
-     <widget class="QSlider" name="horizontalSlider_exposure_time">
-      <property name="geometry">
-       <rect>
-        <x>60</x>
-        <y>40</y>
-        <width>151</width>
-        <height>19</height>
-       </rect>
-      </property>
-      <property name="orientation">
-       <enum>Qt::Horizontal</enum>
-      </property>
-     </widget>
-     <widget class="QLineEdit" name="lineEdit_exposure_time">
-      <property name="geometry">
-       <rect>
-        <x>220</x>
-        <y>40</y>
-        <width>41</width>
-        <height>20</height>
-       </rect>
-      </property>
+      <widget class="QSlider" name="horizontalSlider_gain">
+       <property name="geometry">
+        <rect>
+         <x>60</x>
+         <y>10</y>
+         <width>151</width>
+         <height>19</height>
+        </rect>
+       </property>
+       <property name="orientation">
+        <enum>Qt::Horizontal</enum>
+       </property>
+      </widget>
+      <widget class="QLabel" name="label_2">
+       <property name="geometry">
+        <rect>
+         <x>9</x>
+         <y>13</y>
+         <width>54</width>
+         <height>12</height>
+        </rect>
+       </property>
+       <property name="text">
+        <string>增益</string>
+       </property>
+      </widget>
+      <widget class="QSpinBox" name="spinBox_gain">
+       <property name="geometry">
+        <rect>
+         <x>220</x>
+         <y>10</y>
+         <width>42</width>
+         <height>22</height>
+        </rect>
+       </property>
+      </widget>
+      <widget class="QLabel" name="label_3">
+       <property name="geometry">
+        <rect>
+         <x>8</x>
+         <y>43</y>
+         <width>54</width>
+         <height>12</height>
+        </rect>
+       </property>
+       <property name="text">
+        <string>曝光时间</string>
+       </property>
+      </widget>
+      <widget class="QSlider" name="horizontalSlider_exposure_time">
+       <property name="geometry">
+        <rect>
+         <x>60</x>
+         <y>40</y>
+         <width>151</width>
+         <height>19</height>
+        </rect>
+       </property>
+       <property name="orientation">
+        <enum>Qt::Horizontal</enum>
+       </property>
+      </widget>
+      <widget class="QLineEdit" name="lineEdit_exposure_time">
+       <property name="geometry">
+        <rect>
+         <x>220</x>
+         <y>40</y>
+         <width>41</width>
+         <height>20</height>
+        </rect>
+       </property>
+      </widget>
      </widget>
     </widget>
    </widget>

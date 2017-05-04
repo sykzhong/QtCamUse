@@ -488,3 +488,34 @@ void MainWindow::slot_horizontalSlider_exposure_time_valueChanged(int value)
 		ui->lineEdit_exposure_time->setText(QString(buffer));
 	}
 }
+
+void MainWindow::closeEvent(QCloseEvent * e)
+{
+
+	//linux 需要打开
+	//CameraSetTriggerMode(g_hCamera, 0);
+
+	m_thread->stop();
+	while (!m_thread->wait(100))
+	{
+		QCoreApplication::processEvents();
+	}
+
+	if (g_readBuf != NULL) {
+		free(g_readBuf);
+		g_readBuf = NULL;
+	}
+
+	if (g_pRgbBuffer != NULL) {
+		free(g_pRgbBuffer);
+		g_pRgbBuffer = NULL;
+	}
+
+	if (g_hCamera>0) {
+		//相机反初始化。释放资源。
+		CameraUnInit(g_hCamera);
+		g_hCamera = -1;
+	}
+
+	QMainWindow::closeEvent(e);
+}
