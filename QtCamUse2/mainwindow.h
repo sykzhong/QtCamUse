@@ -46,12 +46,33 @@ private:
     int  GUI_init_exposure(int hCamera,tSdkCameraCapbility * pCameraInfo);
 	int  GUI_init_isp(int hCamera, tSdkCameraCapbility * pCameraInfo);
 	int  GUI_init_Trigger(int hCamera, tSdkCameraCapbility * pCameraInfo);
-//    int  GUI_init_WB(int hCamera,tSdkCameraCapbility * pCameraInfo);
+    int  GUI_init_WB(int hCamera,tSdkCameraCapbility * pCameraInfo);
 //    int  GUI_init_mmap(int hCamera,tSdkCameraCapbility * pCameraInfo);
 //    int  GUI_init_speed(int hCamera,tSdkCameraCapbility * pCameraInfo);
 //    int  GUI_set_speed(int hCamera,tSdkCameraCapbility * pCameraInfo);
 
 private slots:
+	void Image_process(QImage img);
+	void camera_statues();
+	void slot_res_combobox_activated(int index);
+	void slot_radioButton_collect_clicked(bool checked);
+	void slot_radioButton_software_trigger_clicked(bool);
+	void slot_radioButton_hardware_trigger_clicked(bool);
+	void slot_software_trigger_once_button_clicked();
+	void slot_exposure_mode_auto_clicked(bool);
+	void slot_exposure_mode_manual_clicked(bool);
+	void slot_horizontalSlider_gain_valueChanged(int);
+	void slot_horizontalSlider_exposure_time_valueChanged(int);
+	void on_pushButton_AWB_once_clicked();
+	void on_checkBox_isp_h_clicked(bool checked);
+	void on_checkBox_isp_v_clicked(bool checked);
+	void on_radioButton_para_A_clicked(bool);
+	void on_radioButton_para_B_clicked(bool);
+	void on_radioButton_para_C_clicked(bool);
+	void on_radioButton_para_D_clicked(bool);
+	void on_pushButton_para_load_clicked();
+	void on_pushButton_para_save_clicked();
+	void on_pushButton_para_default_clicked();
 //    void on_radioButton_trigger_hardware_clicked(bool checked);
 //    void on_radioButton_software_trigger_clicked(bool checked);
 //    void on_radioButton_collect_clicked(bool checked);
@@ -83,22 +104,7 @@ private slots:
 //    void on_horizontalSlider_gain_valueChanged(int value);
 //    void on_AWB_once_button_released();
 //    void on_res_combobox_activated(int index);
-//
 
-    void Image_process(QImage img);
-    void camera_statues();
-	void slot_res_combobox_activated(int index);
-	void slot_radioButton_collect_clicked(bool checked);
-	void slot_radioButton_software_trigger_clicked(bool);
-	void slot_radioButton_hardware_trigger_clicked(bool);
-	void slot_software_trigger_once_button_clicked();
-	void slot_exposure_mode_auto_clicked(bool);
-	void slot_exposure_mode_manual_clicked(bool);
-	void slot_horizontalSlider_gain_valueChanged(int);
-	void slot_horizontalSlider_exposure_time_valueChanged(int);
-	void on_pushButton_AWB_once_clicked();
-	void on_checkBox_isp_h_clicked(bool checked);
-	void on_checkBox_isp_v_clicked(bool checked);
 //    void on_radioButton_A_clicked(bool checked);
 //    void on_exposure_mode_manual_clicked(bool checked);
 //    void on_exposure_mode_auto_clicked(bool checked);

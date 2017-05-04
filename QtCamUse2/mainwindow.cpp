@@ -4,6 +4,7 @@
 #include <stdio.h>
 #include <QFile>
 #include <QFileDialog>
+#include <QMessageBox>
 
 int                     g_hCamera = -1;     //设备句柄
 unsigned char           * g_pRawBuffer = NULL;     //raw数据
@@ -97,6 +98,8 @@ MainWindow::MainWindow(QWidget *parent) :
 	m_camera_statuesFps->setAlignment(Qt::AlignHCenter);
 	ui->statusBar->addWidget(m_camera_statuesFps);
 
+	ui->radioButton_para_A->setChecked(true);
+
 	GUI_init_Resolution(g_hCamera, &g_tCapability);			//仅初始化了列表未直接选定分辨率
 	GUI_init_parameter(g_hCamera, &g_tCapability);
 
@@ -182,6 +185,8 @@ int MainWindow::GUI_init_parameter(int hCamera, tSdkCameraCapbility *pCameraInfo
 	GUI_init_Trigger(hCamera, pCameraInfo);
 	GUI_init_exposure(hCamera, pCameraInfo);
 	GUI_init_isp(hCamera, pCameraInfo);
+	GUI_init_WB(hCamera, pCameraInfo);
+	
 	return 0;
 }
 
@@ -573,4 +578,162 @@ void MainWindow::on_checkBox_isp_v_clicked(bool checked)
 	else
 		//设置图像镜像操作。镜像操作分为水平和垂直两个方向。垂直
 		CameraSetMirror(g_hCamera, MIRROR_DIRECTION_VERTICAL, false);
+}
+
+void MainWindow::on_radioButton_para_A_clicked(bool checked)
+{
+	ui->radioButton_para_A->setChecked(true);
+
+	if (checked) {
+
+		/*
+		存当前相机参数到指定的参数组中。相机提供了A,B,C,D
+		A,B,C,D四组空间来进行参数的保存。
+		*/
+		CameraSaveParameter(g_hCamera, g_SaveParameter_num);
+		g_SaveParameter_num = 0;
+
+		//加载指定组的参数到相机中。
+		CameraLoadParameter(g_hCamera, g_SaveParameter_num);
+		m_thread->pause();
+		GUI_init_parameter(g_hCamera, &g_tCapability);
+		m_thread->stream();
+
+	}
+}
+
+void MainWindow::on_radioButton_para_B_clicked(bool checked)
+{
+	ui->radioButton_para_B->setChecked(true);
+
+	if (checked) {
+
+		/*
+		存当前相机参数到指定的参数组中。相机提供了A,B,C,D
+		A,B,C,D四组空间来进行参数的保存。
+		*/
+		CameraSaveParameter(g_hCamera, g_SaveParameter_num);
+		g_SaveParameter_num = 1;
+
+		//加载指定组的参数到相机中。
+		CameraLoadParameter(g_hCamera, g_SaveParameter_num);
+		m_thread->pause();
+		GUI_init_parameter(g_hCamera, &g_tCapability);
+		m_thread->stream();
+	}
+}
+
+void MainWindow::on_radioButton_para_C_clicked(bool checked)
+{
+	ui->radioButton_para_C->setChecked(true);
+
+	if (checked) {
+
+		/*
+		存当前相机参数到指定的参数组中。相机提供了A,B,C,D
+		A,B,C,D四组空间来进行参数的保存。
+		*/
+		CameraSaveParameter(g_hCamera, g_SaveParameter_num);
+		g_SaveParameter_num = 2;
+
+		//加载指定组的参数到相机中。
+		CameraLoadParameter(g_hCamera, g_SaveParameter_num);
+		m_thread->pause();
+		GUI_init_parameter(g_hCamera, &g_tCapability);
+		m_thread->stream();
+	}
+}
+
+void MainWindow::on_radioButton_para_D_clicked(bool checked)
+{
+	ui->radioButton_para_D->setChecked(true);
+
+	if (checked) {
+
+		/*
+		存当前相机参数到指定的参数组中。相机提供了A,B,C,D
+		A,B,C,D四组空间来进行参数的保存。
+		*/
+		CameraSaveParameter(g_hCamera, g_SaveParameter_num);
+		g_SaveParameter_num = 3;
+
+		//加载指定组的参数到相机中。
+		CameraLoadParameter(g_hCamera, g_SaveParameter_num);
+		m_thread->pause();
+		GUI_init_parameter(g_hCamera, &g_tCapability);
+		m_thread->stream();
+	}
+}
+
+int MainWindow::GUI_init_WB(int hCamera, tSdkCameraCapbility * pCameraInfo)
+{
+	int RPos, GPos, BPos;
+
+	//设置选中项
+	//获得当前预览的分辨率。
+	CameraGetGain(g_hCamera, &RPos, &GPos, &BPos);
+	CameraSetGain(g_hCamera, RPos, GPos, BPos);
+	return 1;
+}
+
+void MainWindow::on_pushButton_para_load_clicked()
+{
+	QFileDialog *fileDialog = new QFileDialog(this);
+	fileDialog->setNameFilters(QStringList("Config Files(*.config)"));
+	fileDialog->setWindowTitle(tr("Select file"));
+	if (fileDialog->exec() == QDialog::Accepted)
+	{
+		QString path = fileDialog->selectedFiles()[0];
+
+		//由QString转换为char*
+		char*  filename;
+		QByteArray tmp = path.toLatin1();
+		filename = tmp.data();
+
+		int loadstatus = CameraReadParameterFromFile(g_hCamera, filename);
+
+		if (loadstatus != CAMERA_STATUS_SUCCESS)
+			QMessageBox::information(NULL, tr("Select file path"), tr("You didn't select any files."));
+		else
+		{
+			m_thread->pause();
+			GUI_init_parameter(g_hCamera, &g_tCapability);
+			m_thread->stream();
+		}
+	}
+	delete fileDialog;
+}
+
+void MainWindow::on_pushButton_para_save_clicked()
+{
+	QFileDialog *fileDialog = new QFileDialog(this);
+	fileDialog->setWindowTitle(tr("Save file"));
+	fileDialog->setNameFilters(QStringList("Config Files(*.config)"));
+	if (fileDialog->exec() == QDialog::Accepted)
+	{
+		QString path = fileDialog->selectedFiles()[0];
+		path += tr(".config");
+
+		char*  filename;
+		QByteArray tmp = path.toLatin1();
+		filename = tmp.data();
+
+		CameraSaveParameterToFile(g_hCamera, filename);
+
+		m_thread->pause();
+		GUI_init_parameter(g_hCamera, &g_tCapability);
+		m_thread->stream();
+	}
+	delete fileDialog;
+}
+
+//默认参数
+void MainWindow::on_pushButton_para_default_clicked()
+{
+	//加载指定组的参数到相机中。
+	CameraLoadParameter(g_hCamera, PARAMETER_TEAM_DEFAULT);
+
+	m_thread->pause();
+	GUI_init_parameter(g_hCamera, &g_tCapability);
+	m_thread->stream();
 }
