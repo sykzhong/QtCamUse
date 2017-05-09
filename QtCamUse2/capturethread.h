@@ -15,10 +15,7 @@ public:
     void stream();
     void pause();
     void stop();
-
     bool quit;
-
-
 signals:
     void captured(QImage img);
 private:

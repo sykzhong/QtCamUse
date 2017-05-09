@@ -1,5 +1,5 @@
 #include "capturethread.h"
-#include "mainwindow.h"
+#include "QtCamUse.h"
 #include <QDebug>
 
 #include <windows.h>

@@ -77,13 +77,15 @@ public:
     QPushButton *pushButton_para_default;
     QPushButton *pushButton_para_load;
     QLabel *label_6;
+    QPushButton *pushButton_next_move;
+    QPushButton *pushButton_back;
     QStatusBar *statusBar;
 
     void setupUi(QMainWindow *QtCamUseClass)
     {
         if (QtCamUseClass->objectName().isEmpty())
             QtCamUseClass->setObjectName(QStringLiteral("QtCamUseClass"));
-        QtCamUseClass->resize(1247, 688);
+        QtCamUseClass->resize(1120, 647);
         centralWidget = new QWidget(QtCamUseClass);
         centralWidget->setObjectName(QStringLiteral("centralWidget"));
         gvMain = new QGraphicsView(centralWidget);
@@ -91,7 +93,7 @@ public:
         gvMain->setGeometry(QRect(10, 0, 800, 600));
         res_frame = new QFrame(centralWidget);
         res_frame->setObjectName(QStringLiteral("res_frame"));
-        res_frame->setGeometry(QRect(820, 120, 161, 45));
+        res_frame->setGeometry(QRect(820, 140, 161, 45));
         res_frame->setFrameShape(QFrame::StyledPanel);
         res_frame->setFrameShadow(QFrame::Raised);
         groupBox_6 = new QGroupBox(res_frame);
@@ -102,7 +104,7 @@ public:
         res_combobox->setGeometry(QRect(5, 7, 151, 31));
         label_25 = new QLabel(centralWidget);
         label_25->setObjectName(QStringLiteral("label_25"));
-        label_25->setGeometry(QRect(830, 110, 54, 12));
+        label_25->setGeometry(QRect(830, 130, 54, 12));
         trigger_fram = new QFrame(centralWidget);
         trigger_fram->setObjectName(QStringLiteral("trigger_fram"));
         trigger_fram->setGeometry(QRect(990, 10, 121, 111));
@@ -125,21 +127,21 @@ public:
         radioButton_hardware_trigger->setGeometry(QRect(10, 60, 89, 16));
         exp_frame = new QFrame(centralWidget);
         exp_frame->setObjectName(QStringLiteral("exp_frame"));
-        exp_frame->setGeometry(QRect(820, 200, 261, 141));
+        exp_frame->setGeometry(QRect(820, 220, 241, 141));
         exp_frame->setFrameShape(QFrame::StyledPanel);
         exp_frame->setFrameShadow(QFrame::Raised);
         groupBox_2 = new QGroupBox(exp_frame);
         groupBox_2->setObjectName(QStringLiteral("groupBox_2"));
-        groupBox_2->setGeometry(QRect(10, 10, 241, 41));
+        groupBox_2->setGeometry(QRect(0, 10, 131, 41));
         exposure_mode_auto = new QRadioButton(groupBox_2);
         exposure_mode_auto->setObjectName(QStringLiteral("exposure_mode_auto"));
         exposure_mode_auto->setGeometry(QRect(10, 10, 89, 16));
         exposure_mode_manual = new QRadioButton(groupBox_2);
         exposure_mode_manual->setObjectName(QStringLiteral("exposure_mode_manual"));
-        exposure_mode_manual->setGeometry(QRect(90, 10, 89, 16));
+        exposure_mode_manual->setGeometry(QRect(60, 10, 61, 16));
         exposure_manual = new QFrame(exp_frame);
         exposure_manual->setObjectName(QStringLiteral("exposure_manual"));
-        exposure_manual->setGeometry(QRect(10, 60, 241, 71));
+        exposure_manual->setGeometry(QRect(0, 60, 241, 71));
         exposure_manual->setFrameShape(QFrame::StyledPanel);
         exposure_manual->setFrameShadow(QFrame::Raised);
         groupBox_3 = new QGroupBox(exposure_manual);
@@ -167,7 +169,7 @@ public:
         lineEdit_exposure_time->setGeometry(QRect(190, 40, 41, 20));
         label = new QLabel(centralWidget);
         label->setObjectName(QStringLiteral("label"));
-        label->setGeometry(QRect(830, 190, 54, 12));
+        label->setGeometry(QRect(830, 210, 54, 12));
         wb_frame = new QFrame(centralWidget);
         wb_frame->setObjectName(QStringLiteral("wb_frame"));
         wb_frame->setGeometry(QRect(820, 20, 161, 35));
@@ -181,7 +183,7 @@ public:
         label_4->setGeometry(QRect(830, 10, 71, 16));
         isp_frame = new QFrame(centralWidget);
         isp_frame->setObjectName(QStringLiteral("isp_frame"));
-        isp_frame->setGeometry(QRect(820, 70, 161, 35));
+        isp_frame->setGeometry(QRect(820, 80, 161, 35));
         isp_frame->setFrameShape(QFrame::StyledPanel);
         isp_frame->setFrameShadow(QFrame::Raised);
         groupBox_4 = new QGroupBox(isp_frame);
@@ -195,15 +197,15 @@ public:
         checkBox_isp_v->setGeometry(QRect(90, 10, 71, 16));
         label_5 = new QLabel(centralWidget);
         label_5->setObjectName(QStringLiteral("label_5"));
-        label_5->setGeometry(QRect(830, 60, 71, 16));
+        label_5->setGeometry(QRect(830, 70, 71, 16));
         para_frame = new QFrame(centralWidget);
         para_frame->setObjectName(QStringLiteral("para_frame"));
-        para_frame->setGeometry(QRect(820, 360, 261, 91));
+        para_frame->setGeometry(QRect(820, 380, 241, 91));
         para_frame->setFrameShape(QFrame::StyledPanel);
         para_frame->setFrameShadow(QFrame::Raised);
         groupBox_5 = new QGroupBox(para_frame);
         groupBox_5->setObjectName(QStringLiteral("groupBox_5"));
-        groupBox_5->setGeometry(QRect(10, 10, 241, 71));
+        groupBox_5->setGeometry(QRect(0, 10, 241, 71));
         radioButton_para_A = new QRadioButton(groupBox_5);
         radioButton_para_A->setObjectName(QStringLiteral("radioButton_para_A"));
         radioButton_para_A->setGeometry(QRect(10, 14, 31, 16));
@@ -227,7 +229,14 @@ public:
         pushButton_para_load->setGeometry(QRect(90, 40, 131, 23));
         label_6 = new QLabel(centralWidget);
         label_6->setObjectName(QStringLiteral("label_6"));
-        label_6->setGeometry(QRect(830, 350, 54, 12));
+        label_6->setGeometry(QRect(830, 370, 54, 12));
+        pushButton_next_move = new QPushButton(centralWidget);
+        pushButton_next_move->setObjectName(QStringLiteral("pushButton_next_move"));
+        pushButton_next_move->setGeometry(QRect(960, 520, 75, 23));
+        pushButton_back = new QPushButton(centralWidget);
+        pushButton_back->setObjectName(QStringLiteral("pushButton_back"));
+        pushButton_back->setEnabled(false);
+        pushButton_back->setGeometry(QRect(870, 520, 75, 23));
         QtCamUseClass->setCentralWidget(centralWidget);
         statusBar = new QStatusBar(QtCamUseClass);
         statusBar->setObjectName(QStringLiteral("statusBar"));
@@ -270,6 +279,8 @@ public:
         pushButton_para_default->setText(QApplication::translate("QtCamUseClass", "\351\273\230\350\256\244", Q_NULLPTR));
         pushButton_para_load->setText(QApplication::translate("QtCamUseClass", "\344\273\216\346\226\207\344\273\266\344\270\255\345\212\240\350\275\275", Q_NULLPTR));
         label_6->setText(QApplication::translate("QtCamUseClass", "\345\217\202\346\225\260\347\273\204", Q_NULLPTR));
+        pushButton_next_move->setText(QApplication::translate("QtCamUseClass", "\344\270\213\344\270\200\346\255\245", Q_NULLPTR));
+        pushButton_back->setText(QApplication::translate("QtCamUseClass", "\344\270\212\344\270\200\346\255\245", Q_NULLPTR));
     } // retranslateUi
 
 };

@@ -1,5 +1,5 @@
 #include <QtWidgets/QApplication>
-#include "mainwindow.h"
+#include "QtCamUse.h"
 
 int main(int argc, char *argv[])
 {
