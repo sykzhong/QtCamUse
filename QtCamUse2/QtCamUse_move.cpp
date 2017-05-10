@@ -51,12 +51,10 @@ QtCamUse_move::~QtCamUse_move()
 void QtCamUse_move::Image_process(QImage img)
 {
 
-	//if (m_thread->quit)
-	//{
-	//	return;
-	//}
-
-
+	if (m_thread->quit)
+	{
+		return;
+	}
 	if (m_image_item)
 	{
 		m_scene->removeItem(m_image_item);

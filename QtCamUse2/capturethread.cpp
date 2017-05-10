@@ -73,6 +73,7 @@ void CaptureThread::run()
 void CaptureThread::stream()
 {
     pause_status = false;
+	quit = false;
 }
 
 void CaptureThread::pause()

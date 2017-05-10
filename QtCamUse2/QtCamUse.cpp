@@ -758,10 +758,8 @@ void MainWindow::on_pushButton_next_move_clicked()
 	//connect(m_thread, SIGNAL(captured(QImage)), m_QtCamUse_move_window,						//连接m_thread与QtCamUse_move_window中图像接收槽
 	//	SLOT(m_QtCamUse_move_window->QtCamUse_move::Image_process(QImage)), Qt::QueuedConnection);
 	
-	disconnect(m_thread, SIGNAL(captured(QImage)), this, SLOT(Image_process(QImage)));		//断开m_thread与Image_process之间的联系
-	m_thread->pause();
-	
-	
+	disconnect(m_thread, SIGNAL(captured(QImage)), this, SLOT(Image_process(QImage)));			//断开m_thread与Image_process之间的联系
+	m_thread->stop();
 	this->hide();
 }
 
@@ -783,7 +781,8 @@ void MainWindow::slot_recover()
 		return;
 	}
 	connect(m_thread, SIGNAL(captured(QImage)), this, SLOT(Image_process(QImage)), Qt::BlockingQueuedConnection);
-	m_thread->start();
 	m_thread->stream();
+	m_thread->start();
+	
 	this->show();
 }
