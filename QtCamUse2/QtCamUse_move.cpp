@@ -109,3 +109,4 @@ void QtCamUse_move::on_pushButton_back_to_mainwindow_clicked()
 {
 	emit(back_to_mainwindow());
 }
+
