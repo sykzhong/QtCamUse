@@ -58,7 +58,7 @@ public:
         pushButton_back_to_mainwindow->setGeometry(QRect(10, 30, 75, 23));
         label = new QLabel(centralwidget);
         label->setObjectName(QStringLiteral("label"));
-        label->setGeometry(QRect(860, 40, 81, 21));
+        label->setGeometry(QRect(850, 50, 81, 21));
         QtCamUse_moveClass->setCentralWidget(centralwidget);
         statusbar = new QStatusBar(QtCamUse_moveClass);
         statusbar->setObjectName(QStringLiteral("statusbar"));

@@ -76,7 +76,12 @@ int MainWindow::init_SDK()
 
 MainWindow::MainWindow(QWidget *parent) :
 	QMainWindow(parent),
-	ui(new Ui::QtCamUseClass), m_scene(0), m_image_item(0)
+	ui(new Ui::QtCamUseClass), 
+	m_scene(0), 
+	m_image_item(0), 
+	m_QtCamUse_move_window(0),
+	b_child_window(FALSE),
+	b_pause(FALSE)
 {
 	if (init_SDK() == -1) {
 		status = 0;
@@ -187,7 +192,8 @@ int MainWindow::GUI_init_parameter(int hCamera, tSdkCameraCapbility *pCameraInfo
 	GUI_init_exposure(hCamera, pCameraInfo);
 	GUI_init_isp(hCamera, pCameraInfo);
 	GUI_init_WB(hCamera, pCameraInfo);
-	stop_to_next_flag = FALSE;
+	CameraSetFrameSpeed(g_hCamera, 2);			//将相机的采集帧率设为高速
+	
 	
 	return 0;
 }
@@ -741,29 +747,43 @@ void MainWindow::on_pushButton_para_default_clicked()
 
 void MainWindow::on_pushButton_next_move_clicked()
 {
-	stop_to_next_flag = TRUE;
-	m_QtCamUse_move_window = new QtCamUse_move(this);
+	b_pause = TRUE;
+	if (b_child_window == FALSE)
+	{
+		m_QtCamUse_move_window = new QtCamUse_move(this);
+		connect(m_QtCamUse_move_window, SIGNAL(back_to_mainwindow()), this, SLOT(slot_recover()));		//开启原窗口复原槽
+		b_child_window = TRUE;
+	}
 	m_QtCamUse_move_window->show();
 	//connect(m_thread, SIGNAL(captured(QImage)), m_QtCamUse_move_window,						//连接m_thread与QtCamUse_move_window中图像接收槽
 	//	SLOT(m_QtCamUse_move_window->QtCamUse_move::Image_process(QImage)), Qt::QueuedConnection);
 	
 	disconnect(m_thread, SIGNAL(captured(QImage)), this, SLOT(Image_process(QImage)));		//断开m_thread与Image_process之间的联系
 	m_thread->pause();
-	connect(m_QtCamUse_move_window, SIGNAL(back_to_mainwindow()), this, SLOT(slot_recover()));		//开启原窗口复原槽
+	
 	
 	this->hide();
 }
 
 void MainWindow::slot_recover()
 {
-	if (stop_to_next_flag == FALSE)
+	if (b_pause == FALSE)
 	{
 		QMessageBox::information(NULL, tr("Wanrning"), tr("This mainwindow hasn't been closed"));
 	}
-	stop_to_next_flag = FALSE;
+	b_pause = FALSE;
+
 	m_QtCamUse_move_window->close();
+	delete m_QtCamUse_move_window;
+	b_child_window = FALSE;
+
+	if (init_SDK() == -1)		//需重新初始化相机
+	{
+		status = 0;
+		return;
+	}
 	connect(m_thread, SIGNAL(captured(QImage)), this, SLOT(Image_process(QImage)), Qt::BlockingQueuedConnection);
-	//m_thread->start();
+	m_thread->start();
 	m_thread->stream();
 	this->show();
 }

@@ -1,2 +1,9 @@
-﻿  QtCamUse.cpp
+﻿  Moc'ing QtCamUse.h...
+  moc_QtCamUse.cpp
+  moc_QtCamUse_move.cpp
+  QtCamUse.cpp
+  QtCamUse_move.cpp
+  capturethread.cpp
+  main.cpp
+  正在生成代码...
   QtCamUse2.vcxproj -> E:\Cloud\Research\Vision\QtCamUse2\x64\Debug\QtCamUse2.exe

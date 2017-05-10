@@ -54,7 +54,7 @@ private:
 //    int  GUI_init_mmap(int hCamera,tSdkCameraCapbility * pCameraInfo);
 //    int  GUI_init_speed(int hCamera,tSdkCameraCapbility * pCameraInfo);
 //    int  GUI_set_speed(int hCamera,tSdkCameraCapbility * pCameraInfo);
-	bool stop_to_next_flag;			//暂停窗口运作进入下一操作环节的标识
+	
 
 private slots:
 	void Image_process(QImage img);
@@ -126,6 +126,10 @@ private slots:
 
 private:
 	QtCamUse_move *m_QtCamUse_move_window;
+	bool b_child_window;		//判断是否有子窗口
+
+	bool b_pause;				//暂停窗口运作进入下一操作环节的标识
+
     QTimer *m_timer;
     QLabel *m_camera_statuesFps;
     bool   exposure_time_lineedit_status;
