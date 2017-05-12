@@ -12,7 +12,6 @@ extern unsigned char        * g_pRgbBuffer;     //处理后数据缓存区
 extern tSdkFrameHead        g_tFrameHead;       //图像帧头信息
 extern tSdkCameraCapbility  g_tCapability;      //设备描述信息
 
-
 extern int                     g_SaveParameter_num;    //保存参数组
 extern int                     g_SaveImage_type;         //保存图像格式
 
@@ -37,6 +36,8 @@ QtCamUse_move::QtCamUse_move(QWidget *parent)
 
 	connect(m_thread, SIGNAL(captured(QImage)),
 		this, SLOT(Image_process(QImage)), Qt::BlockingQueuedConnection);
+
+	ui->lineEdit_get_back_path->setReadOnly(TRUE);
 
 	m_thread->start();
 	m_thread->stream();
@@ -110,3 +111,56 @@ void QtCamUse_move::on_pushButton_back_to_mainwindow_clicked()
 	emit(back_to_mainwindow());
 }
 
+void QtCamUse_move::on_pushButton_get_template_clicked()
+{
+
+}
+
+void QtCamUse_move::on_pushButton_get_back_save_clicked()
+{
+
+	QString path;
+	char * filename;
+
+	QDateTime time = QDateTime::currentDateTime();
+	QString strtime = time.toString("yyyyMMdd_hhmmss");
+	QString strfilename = QString("BackImage") + strtime + QString(".bmp");
+
+	path = QFileDialog::getSaveFileName(this, "Save BackImage", strfilename);
+
+	ui->lineEdit_get_back_path->setText(path);
+	QByteArray tmp = path.toLatin1();
+	filename = tmp.data();
+
+	tSdkFrameHead	tFrameHead;
+	BYTE			*pbyBuffer;
+	BYTE			*pbImgBuffer;
+
+	//CameraSnapToBuffer抓拍一张图像保存到buffer中
+	if (CameraSnapToBuffer(g_hCamera, &tFrameHead, &pbyBuffer, 1000) == CAMERA_STATUS_SUCCESS)
+	{
+		int iHeight = g_tCapability.sResolutionRange.iHeightMax;
+		int iWidth = g_tCapability.sResolutionRange.iWidthMax;
+		pbImgBuffer = (unsigned char*)malloc(iHeight*iWidth * 3);
+		/*
+		将获得的相机原始输出图像数据进行处理，叠加饱和度、
+		颜色增益和校正、降噪等处理效果，最后得到RGB888
+		格式的图像数据。
+		*/
+		CameraImageProcess(g_hCamera, pbyBuffer, pbImgBuffer, &tFrameHead);
+
+		//将图像缓冲区的数据保存成图片文件。
+		if (path.isEmpty() == TRUE || CameraSaveImage(g_hCamera, filename, pbImgBuffer, &tFrameHead, FILE_BMP, 100) != CAMERA_STATUS_SUCCESS)
+		{
+			QMessageBox::information(NULL, tr("Path error"), tr("The path is invalid"));
+			free(pbImgBuffer);
+			return;
+		}
+
+		m_imageprocess.getBackImage(filename);
+
+		//释放由CameraGetImageBuffer获得的缓冲区。
+		CameraReleaseImageBuffer(g_hCamera, pbImgBuffer);
+		free(pbImgBuffer);
+	}
+}

@@ -1,8 +1,32 @@
 #include "ImageProcess.h"
+#include "QtCamUse.h"
+extern int                  g_hCamera;          //设备句柄
+extern unsigned char        * g_pRawBuffer;     //raw数据
+extern unsigned char        * g_pRgbBuffer;     //处理后数据缓存区
+extern tSdkFrameHead        g_tFrameHead;       //图像帧头信息
+extern tSdkCameraCapbility  g_tCapability;      //设备描述信息
 
-void ImageProcess::getImage()
+extern int                     g_SaveParameter_num;    //保存参数组
+extern int                     g_SaveImage_type;         //保存图像格式
+
+extern Width_Height            g_W_H_INFO;         //显示画板到大小和图像大小
+extern BYTE                    *g_readBuf;    //画板显示数据区
+extern int                     g_read_fps;       //统计读取帧率
+extern int                     g_disply_fps;     //统计显示帧率
+
+void ImageProcess::getBackImage(BYTE *pbImgBuffer, int width, int height)
 {
-	
+	//内存分配存在问题，不可用
+	BYTE* pmat;
+	memcpy(pmat, pbImgBuffer, height*width * 3);
+	backImage = Mat(Size(width, height), CV_8UC3, pmat, Mat::AUTO_STEP);
+	return;
+}
+
+void ImageProcess::getBackImage(char* filename)
+{
+	backImage = imread(filename);
+	return;
 }
 
 void ImageProcess::processImage()

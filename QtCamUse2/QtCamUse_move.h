@@ -5,6 +5,7 @@
 
 #include <QtCamUse.h>
 #include "CameraApi.h"
+#include "ImageProcess.h"
 
 namespace Ui
 {
@@ -23,6 +24,7 @@ public:
 	int status;
 
 protected:
+	ImageProcess m_imageprocess;			//进行图像处理的正体
 
 private:
 	Ui::QtCamUse_moveClass *ui;
@@ -34,12 +36,17 @@ private:
 	QMutex mutex;							//同步锁
 	QGraphicsPixmapItem *m_image_item;
 
+
 signals:
 	void back_to_mainwindow();
+	void get_template_image();
+	void get_back_image();
 
 private slots:
 	void Image_process(QImage img);
 	void on_pushButton_back_to_mainwindow_clicked();
+	void on_pushButton_get_template_clicked();
+	void on_pushButton_get_back_save_clicked();
 };
 
 #endif

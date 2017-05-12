@@ -21,8 +21,8 @@ QT_BEGIN_MOC_NAMESPACE
 QT_WARNING_PUSH
 QT_WARNING_DISABLE_DEPRECATED
 struct qt_meta_stringdata_QtCamUse_move_t {
-    QByteArrayData data[6];
-    char stringdata0[93];
+    QByteArrayData data[10];
+    char stringdata0[198];
 };
 #define QT_MOC_LITERAL(idx, ofs, len) \
     Q_STATIC_BYTE_ARRAY_DATA_HEADER_INITIALIZER_WITH_OFFSET(len, \
@@ -34,14 +34,21 @@ static const qt_meta_stringdata_QtCamUse_move_t qt_meta_stringdata_QtCamUse_move
 QT_MOC_LITERAL(0, 0, 13), // "QtCamUse_move"
 QT_MOC_LITERAL(1, 14, 18), // "back_to_mainwindow"
 QT_MOC_LITERAL(2, 33, 0), // ""
-QT_MOC_LITERAL(3, 34, 13), // "Image_process"
-QT_MOC_LITERAL(4, 48, 3), // "img"
-QT_MOC_LITERAL(5, 52, 40) // "on_pushButton_back_to_mainwin..."
+QT_MOC_LITERAL(3, 34, 18), // "get_template_image"
+QT_MOC_LITERAL(4, 53, 14), // "get_back_image"
+QT_MOC_LITERAL(5, 68, 13), // "Image_process"
+QT_MOC_LITERAL(6, 82, 3), // "img"
+QT_MOC_LITERAL(7, 86, 40), // "on_pushButton_back_to_mainwin..."
+QT_MOC_LITERAL(8, 127, 34), // "on_pushButton_get_template_cl..."
+QT_MOC_LITERAL(9, 162, 35) // "on_pushButton_get_back_save_c..."
 
     },
     "QtCamUse_move\0back_to_mainwindow\0\0"
+    "get_template_image\0get_back_image\0"
     "Image_process\0img\0"
-    "on_pushButton_back_to_mainwindow_clicked"
+    "on_pushButton_back_to_mainwindow_clicked\0"
+    "on_pushButton_get_template_clicked\0"
+    "on_pushButton_get_back_save_clicked"
 };
 #undef QT_MOC_LITERAL
 
@@ -51,25 +58,33 @@ static const uint qt_meta_data_QtCamUse_move[] = {
        7,       // revision
        0,       // classname
        0,    0, // classinfo
-       3,   14, // methods
+       7,   14, // methods
        0,    0, // properties
        0,    0, // enums/sets
        0,    0, // constructors
        0,       // flags
-       1,       // signalCount
+       3,       // signalCount
 
  // signals: name, argc, parameters, tag, flags
-       1,    0,   29,    2, 0x06 /* Public */,
+       1,    0,   49,    2, 0x06 /* Public */,
+       3,    0,   50,    2, 0x06 /* Public */,
+       4,    0,   51,    2, 0x06 /* Public */,
 
  // slots: name, argc, parameters, tag, flags
-       3,    1,   30,    2, 0x08 /* Private */,
-       5,    0,   33,    2, 0x08 /* Private */,
+       5,    1,   52,    2, 0x08 /* Private */,
+       7,    0,   55,    2, 0x08 /* Private */,
+       8,    0,   56,    2, 0x08 /* Private */,
+       9,    0,   57,    2, 0x08 /* Private */,
 
  // signals: parameters
     QMetaType::Void,
+    QMetaType::Void,
+    QMetaType::Void,
 
  // slots: parameters
-    QMetaType::Void, QMetaType::QImage,    4,
+    QMetaType::Void, QMetaType::QImage,    6,
+    QMetaType::Void,
+    QMetaType::Void,
     QMetaType::Void,
 
        0        // eod
@@ -82,8 +97,12 @@ void QtCamUse_move::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _i
         Q_UNUSED(_t)
         switch (_id) {
         case 0: _t->back_to_mainwindow(); break;
-        case 1: _t->Image_process((*reinterpret_cast< QImage(*)>(_a[1]))); break;
-        case 2: _t->on_pushButton_back_to_mainwindow_clicked(); break;
+        case 1: _t->get_template_image(); break;
+        case 2: _t->get_back_image(); break;
+        case 3: _t->Image_process((*reinterpret_cast< QImage(*)>(_a[1]))); break;
+        case 4: _t->on_pushButton_back_to_mainwindow_clicked(); break;
+        case 5: _t->on_pushButton_get_template_clicked(); break;
+        case 6: _t->on_pushButton_get_back_save_clicked(); break;
         default: ;
         }
     } else if (_c == QMetaObject::IndexOfMethod) {
@@ -93,6 +112,20 @@ void QtCamUse_move::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _i
             typedef void (QtCamUse_move::*_t)();
             if (*reinterpret_cast<_t *>(func) == static_cast<_t>(&QtCamUse_move::back_to_mainwindow)) {
                 *result = 0;
+                return;
+            }
+        }
+        {
+            typedef void (QtCamUse_move::*_t)();
+            if (*reinterpret_cast<_t *>(func) == static_cast<_t>(&QtCamUse_move::get_template_image)) {
+                *result = 1;
+                return;
+            }
+        }
+        {
+            typedef void (QtCamUse_move::*_t)();
+            if (*reinterpret_cast<_t *>(func) == static_cast<_t>(&QtCamUse_move::get_back_image)) {
+                *result = 2;
                 return;
             }
         }
@@ -124,13 +157,13 @@ int QtCamUse_move::qt_metacall(QMetaObject::Call _c, int _id, void **_a)
     if (_id < 0)
         return _id;
     if (_c == QMetaObject::InvokeMetaMethod) {
-        if (_id < 3)
+        if (_id < 7)
             qt_static_metacall(this, _c, _id, _a);
-        _id -= 3;
+        _id -= 7;
     } else if (_c == QMetaObject::RegisterMethodArgumentMetaType) {
-        if (_id < 3)
+        if (_id < 7)
             *reinterpret_cast<int*>(_a[0]) = -1;
-        _id -= 3;
+        _id -= 7;
     }
     return _id;
 }
@@ -139,6 +172,18 @@ int QtCamUse_move::qt_metacall(QMetaObject::Call _c, int _id, void **_a)
 void QtCamUse_move::back_to_mainwindow()
 {
     QMetaObject::activate(this, &staticMetaObject, 0, Q_NULLPTR);
+}
+
+// SIGNAL 1
+void QtCamUse_move::get_template_image()
+{
+    QMetaObject::activate(this, &staticMetaObject, 1, Q_NULLPTR);
+}
+
+// SIGNAL 2
+void QtCamUse_move::get_back_image()
+{
+    QMetaObject::activate(this, &staticMetaObject, 2, Q_NULLPTR);
 }
 QT_WARNING_POP
 QT_END_MOC_NAMESPACE

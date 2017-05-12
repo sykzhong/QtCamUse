@@ -8,6 +8,9 @@ class ImageProcess:QObject
 	Q_OBJECT
 public:
 	void getImage();
+	void getBackImage(BYTE *pbImgBuffer, int width, int height);
+	void getBackImage(char* filename);
+	void getTemplateImage();
 	void processImage();
 	Mat QImage2Mat(QImage &image);
 
