@@ -14,62 +14,53 @@ extern BYTE                    *g_readBuf;    //画板显示数据区
 extern int                     g_read_fps;       //统计读取帧率
 extern int                     g_disply_fps;     //统计显示帧率
 
-void ImageProcess::getBackImage(BYTE *pbImgBuffer, int width, int height)
+void ImageProcess::getBackImageFromPath(char* filename)
 {
-	//内存分配存在问题，不可用
-	BYTE* pmat;
-	memcpy(pmat, pbImgBuffer, height*width * 3);
-	backImage = Mat(Size(width, height), CV_8UC3, pmat, Mat::AUTO_STEP);
+	m_backImage = imread(filename);
 	return;
 }
 
-void ImageProcess::getBackImage(char* filename)
+void ImageProcess::getTemplateImageFromPath(char* filename)
 {
-	backImage = imread(filename);
+	m_templateImage = imread(filename);
 	return;
 }
 
 void ImageProcess::processImage()
 {
 	HSVHist src, back;
-	src.getImage(srcImage);
-	back.getImage(backImage);
-
-	HSVHist::removeBack(src, back);
-
-
+	src.getImage(m_templateImage);
+	back.getImage(m_backImage);
+	m_showImage = HSVHist::removeBack(src, back);
+	emit proResult(Mat2QImage(m_showImage));
 }
 
-void ImageProcess::slot_get_template_image(QImage image)
-{
-	srcImage = Mat();
-	srcImage = QImage2Mat(image);
-}
+//Mat ImageProcess::QImage2Mat(QImage &image)
+//{
+//	Mat tmpmat;
+//	//qDebug() << image.format();
+//	switch (image.format())
+//	{
+//	case QImage::Format_ARGB32:
+//	case QImage::Format_RGB32:
+//	case QImage::Format_ARGB32_Premultiplied:
+//		tmpmat = cv::Mat(image.height(), image.width(), CV_8UC4, (void*)image.constBits(), image.bytesPerLine());
+//		break;
+//	case QImage::Format_RGB888:
+//		tmpmat = cv::Mat(image.height(), image.width(), CV_8UC3, (void*)image.constBits(), image.bytesPerLine());
+//		cv::cvtColor(tmpmat, tmpmat, CV_BGR2RGB);
+//		break;
+//	case QImage::Format_Indexed8:
+//		tmpmat = cv::Mat(image.height(), image.width(), CV_8UC1, (void*)image.constBits(), image.bytesPerLine());
+//		break;
+//	}
+//	return tmpmat;
+//}
 
-void ImageProcess::slot_get_back_image(QImage image)
+bool ImageProcess::isReady()
 {
-	backImage = Mat();
-	backImage = QImage2Mat(image);
-}
-
-Mat ImageProcess::QImage2Mat(QImage &image)
-{
-	Mat tmpmat;
-	//qDebug() << image.format();
-	switch (image.format())
-	{
-	case QImage::Format_ARGB32:
-	case QImage::Format_RGB32:
-	case QImage::Format_ARGB32_Premultiplied:
-		tmpmat = cv::Mat(image.height(), image.width(), CV_8UC4, (void*)image.constBits(), image.bytesPerLine());
-		break;
-	case QImage::Format_RGB888:
-		tmpmat = cv::Mat(image.height(), image.width(), CV_8UC3, (void*)image.constBits(), image.bytesPerLine());
-		cv::cvtColor(tmpmat, tmpmat, CV_BGR2RGB);
-		break;
-	case QImage::Format_Indexed8:
-		tmpmat = cv::Mat(image.height(), image.width(), CV_8UC1, (void*)image.constBits(), image.bytesPerLine());
-		break;
-	}
-	return tmpmat;
+	if (m_backImage.empty() != true && m_templateImage.empty() != true)
+		return true;
+	else
+		return false;
 }

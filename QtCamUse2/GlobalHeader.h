@@ -28,4 +28,7 @@ static const Scalar WHITE = Scalar(255, 255, 255);
 
 static const double PI = 3.141592654;
 
+QImage Mat2QImage(Mat &src);
+Mat QImage2Mat(QImage &src);
+
 #endif

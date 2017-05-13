@@ -22,7 +22,8 @@ extern int                     g_disply_fps;     //统计显示帧率
 
 QtCamUse_move::QtCamUse_move(QWidget *parent)
 	:ui(new Ui::QtCamUse_moveClass),
-	m_scene(0), m_image_item(0)
+	m_scene(0), m_image_item(0),
+	m_imageprocess(new ImageProcess)
 {
 	ui->setupUi(this);
 	m_scene = new QGraphicsScene(this);
@@ -38,6 +39,7 @@ QtCamUse_move::QtCamUse_move(QWidget *parent)
 		this, SLOT(Image_process(QImage)), Qt::BlockingQueuedConnection);
 
 	ui->lineEdit_get_back_path->setReadOnly(TRUE);
+	ui->lineEdit_get_template_path->setReadOnly(TRUE);
 
 	m_thread->start();
 	m_thread->stream();
@@ -111,22 +113,16 @@ void QtCamUse_move::on_pushButton_back_to_mainwindow_clicked()
 	emit(back_to_mainwindow());
 }
 
-void QtCamUse_move::on_pushButton_get_template_clicked()
-{
-
-}
-
 void QtCamUse_move::on_pushButton_get_back_save_clicked()
 {
-
 	QString path;
 	char * filename;
 
 	QDateTime time = QDateTime::currentDateTime();
 	QString strtime = time.toString("yyyyMMdd_hhmmss");
-	QString strfilename = QString("BackImage") + strtime + QString(".bmp");
+	QString strfilename = QString("BI") + strtime + QString(".bmp");
 
-	path = QFileDialog::getSaveFileName(this, "Save BackImage", strfilename);
+	path = QFileDialog::getSaveFileName(this, "Save BackImage", strfilename, tr("BMP Image (*.bmp *.BMP)"));
 
 	ui->lineEdit_get_back_path->setText(path);
 	QByteArray tmp = path.toLatin1();
@@ -152,15 +148,100 @@ void QtCamUse_move::on_pushButton_get_back_save_clicked()
 		//将图像缓冲区的数据保存成图片文件。
 		if (path.isEmpty() == TRUE || CameraSaveImage(g_hCamera, filename, pbImgBuffer, &tFrameHead, FILE_BMP, 100) != CAMERA_STATUS_SUCCESS)
 		{
-			QMessageBox::information(NULL, tr("Path error"), tr("The path is invalid"));
+			QMessageBox::information(NULL, tr("Path error"), tr("The path to save backimage is invalid"));
 			free(pbImgBuffer);
 			return;
 		}
 
-		m_imageprocess.getBackImage(filename);
+		m_imageprocess->getBackImageFromPath(filename);
 
 		//释放由CameraGetImageBuffer获得的缓冲区。
 		CameraReleaseImageBuffer(g_hCamera, pbImgBuffer);
 		free(pbImgBuffer);
 	}
+}
+
+void QtCamUse_move::on_pushButton_get_back_load_clicked()
+{
+	QString path;
+	char * filename;
+
+	path = QFileDialog::getOpenFileName(this, "Save BackImage", NULL, tr("BMP Image (*.bmp *.BMP)"));
+	ui->lineEdit_get_back_path->setText(path);
+	QByteArray tmp = path.toLatin1();
+	filename = tmp.data();
+	m_imageprocess->getBackImageFromPath(filename);
+}
+
+void QtCamUse_move::on_pushButton_get_template_save_clicked()
+{
+	QString path;
+	char * filename;
+
+	QDateTime time = QDateTime::currentDateTime();
+	QString strtime = time.toString("yyyyMMdd_hhmmss");
+	QString strfilename = QString("TI") + strtime + QString(".bmp");
+
+	path = QFileDialog::getSaveFileName(this, "Save TemplateImage", strfilename);
+
+	ui->lineEdit_get_template_path->setText(path);
+	QByteArray tmp = path.toLatin1();
+	filename = tmp.data();
+
+	tSdkFrameHead	tFrameHead;
+	BYTE			*pbyBuffer;
+	BYTE			*pbImgBuffer;
+
+	//CameraSnapToBuffer抓拍一张图像保存到buffer中
+	if (CameraSnapToBuffer(g_hCamera, &tFrameHead, &pbyBuffer, 1000) == CAMERA_STATUS_SUCCESS)
+	{
+		int iHeight = g_tCapability.sResolutionRange.iHeightMax;
+		int iWidth = g_tCapability.sResolutionRange.iWidthMax;
+		pbImgBuffer = (unsigned char*)malloc(iHeight*iWidth * 3);
+		/*
+		将获得的相机原始输出图像数据进行处理，叠加饱和度、
+		颜色增益和校正、降噪等处理效果，最后得到RGB888
+		格式的图像数据。
+		*/
+		CameraImageProcess(g_hCamera, pbyBuffer, pbImgBuffer, &tFrameHead);
+
+		//将图像缓冲区的数据保存成图片文件。
+		if (path.isEmpty() == TRUE || CameraSaveImage(g_hCamera, filename, pbImgBuffer, &tFrameHead, FILE_BMP, 100) != CAMERA_STATUS_SUCCESS)
+		{
+			QMessageBox::information(NULL, tr("Path error"), tr("The path to save templateimage is invalid"));
+			free(pbImgBuffer);
+			return;
+		}
+
+		m_imageprocess->getTemplateImageFromPath(filename);
+
+		//释放由CameraGetImageBuffer获得的缓冲区。
+		CameraReleaseImageBuffer(g_hCamera, pbImgBuffer);
+		free(pbImgBuffer);
+	}
+}
+
+void QtCamUse_move::on_pushButton_get_template_load_clicked()
+{
+	QString path;
+	char * filename;
+
+	path = QFileDialog::getOpenFileName(this, "Save TemplateImage", NULL);
+	ui->lineEdit_get_template_path->setText(path);
+	QByteArray tmp = path.toLatin1();
+	filename = tmp.data();
+	m_imageprocess->getTemplateImageFromPath(filename);
+}
+
+void QtCamUse_move::on_pushButton_image_process_clicked()
+{
+	if (m_imageprocess->isReady() != true)
+	{
+		QMessageBox::information(NULL, tr("Warning"), tr("Lack backimage or templateimage"));
+		return;
+	}
+	this->hide();
+	QtCamUse_process *processwin = new QtCamUse_process(this, m_imageprocess);
+	processwin->show();
+	m_imageprocess->processImage();
 }

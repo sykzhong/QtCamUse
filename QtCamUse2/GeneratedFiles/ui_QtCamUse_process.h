@@ -13,6 +13,7 @@
 #include <QtWidgets/QAction>
 #include <QtWidgets/QApplication>
 #include <QtWidgets/QButtonGroup>
+#include <QtWidgets/QGraphicsView>
 #include <QtWidgets/QHeaderView>
 #include <QtWidgets/QMainWindow>
 #include <QtWidgets/QMenuBar>
@@ -21,45 +22,47 @@
 
 QT_BEGIN_NAMESPACE
 
-class Ui_MainWindow
+class Ui_QtCamUse_processClass
 {
 public:
     QWidget *centralwidget;
+    QGraphicsView *gvMain;
     QMenuBar *menubar;
     QStatusBar *statusbar;
 
-    void setupUi(QMainWindow *MainWindow)
+    void setupUi(QMainWindow *QtCamUse_processClass)
     {
-        if (MainWindow->objectName().isEmpty())
-            MainWindow->setObjectName(QStringLiteral("MainWindow"));
-        MainWindow->resize(800, 600);
-        centralwidget = new QWidget(MainWindow);
+        if (QtCamUse_processClass->objectName().isEmpty())
+            QtCamUse_processClass->setObjectName(QStringLiteral("QtCamUse_processClass"));
+        QtCamUse_processClass->resize(1120, 647);
+        centralwidget = new QWidget(QtCamUse_processClass);
         centralwidget->setObjectName(QStringLiteral("centralwidget"));
-        centralwidget->setGeometry(QRect(0, 21, 800, 560));
-        MainWindow->setCentralWidget(centralwidget);
-        menubar = new QMenuBar(MainWindow);
+        gvMain = new QGraphicsView(centralwidget);
+        gvMain->setObjectName(QStringLiteral("gvMain"));
+        gvMain->setGeometry(QRect(10, 0, 800, 600));
+        QtCamUse_processClass->setCentralWidget(centralwidget);
+        menubar = new QMenuBar(QtCamUse_processClass);
         menubar->setObjectName(QStringLiteral("menubar"));
-        menubar->setGeometry(QRect(0, 0, 800, 21));
-        MainWindow->setMenuBar(menubar);
-        statusbar = new QStatusBar(MainWindow);
+        menubar->setGeometry(QRect(0, 0, 1120, 23));
+        QtCamUse_processClass->setMenuBar(menubar);
+        statusbar = new QStatusBar(QtCamUse_processClass);
         statusbar->setObjectName(QStringLiteral("statusbar"));
-        statusbar->setGeometry(QRect(0, 581, 800, 19));
-        MainWindow->setStatusBar(statusbar);
+        QtCamUse_processClass->setStatusBar(statusbar);
 
-        retranslateUi(MainWindow);
+        retranslateUi(QtCamUse_processClass);
 
-        QMetaObject::connectSlotsByName(MainWindow);
+        QMetaObject::connectSlotsByName(QtCamUse_processClass);
     } // setupUi
 
-    void retranslateUi(QMainWindow *MainWindow)
+    void retranslateUi(QMainWindow *QtCamUse_processClass)
     {
-        MainWindow->setWindowTitle(QApplication::translate("MainWindow", "MainWindow", Q_NULLPTR));
+        QtCamUse_processClass->setWindowTitle(QApplication::translate("QtCamUse_processClass", "MainWindow", Q_NULLPTR));
     } // retranslateUi
 
 };
 
 namespace Ui {
-    class MainWindow: public Ui_MainWindow {};
+    class QtCamUse_processClass: public Ui_QtCamUse_processClass {};
 } // namespace Ui
 
 QT_END_NAMESPACE

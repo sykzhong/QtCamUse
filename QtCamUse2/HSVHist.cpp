@@ -185,9 +185,10 @@ void HSVHist::showImage(string strpath)
 	imwrite("houghtest.jpg", m_image);
 }
 
-void HSVHist::removeBack(HSVHist& dst, HSVHist& back)
+Mat HSVHist::removeBack(HSVHist& dst, HSVHist& back)
 {
 	dst.Init();
 	back.Init();
 	dst.removeSeg(back);
+	return dst.m_image;
 }

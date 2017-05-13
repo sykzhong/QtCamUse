@@ -1,12 +1,5 @@
-﻿  Moc'ing QtCamUse_move.h...
-  Uic'ing QtCamUse_move.ui...
-  moc_QtCamUse.cpp
-  moc_QtCamUse_move.cpp
-  ImageProcess.cpp
-  QtCamUse.cpp
-  QtCamUse_move.cpp
-  capturethread.cpp
-  main.cpp
-  正在生成代码...
-e:\cloud\research\vision\qtcamuse2\qtcamuse2\imageprocess.cpp(21): warning C4700: 使用了未初始化的局部变量“pmat”
+﻿  QtCamUse_process.cpp
+e:\cloud\research\vision\qtcamuse2\qtcamuse2\ImageProcess.h(7): warning C4584: “ImageProcess”: 基类“QObject”已是“HSVHist”的基类
+  d:\qt\qt5.8.0\5.8\msvc2015_64\include\qtgui\qgenericpluginfactory.h(50): note: 参见“QObject”的声明
+  e:\cloud\research\vision\qtcamuse2\qtcamuse2\HSVHist.h(6): note: 参见“HSVHist”的声明
   QtCamUse2.vcxproj -> E:\Cloud\Research\Vision\QtCamUse2\x64\Debug\QtCamUse2.exe

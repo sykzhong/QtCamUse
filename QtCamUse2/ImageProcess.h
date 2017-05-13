@@ -3,24 +3,28 @@
 #include "GlobalHeader.h"
 #include "capturethread.h"
 #include "HSVHist.h"
-class ImageProcess:QObject
+class ImageProcess:public QObject, public HSVHist
 {
 	Q_OBJECT
 public:
-	void getImage();
-	void getBackImage(BYTE *pbImgBuffer, int width, int height);
-	void getBackImage(char* filename);
+	void getBackImageFromPath(char* filename);
+	void getTemplateImageFromPath(char* filename);
 	void getTemplateImage();
 	void processImage();
-	Mat QImage2Mat(QImage &image);
+	//Mat QImage2Mat(QImage &image);
+	bool isReady();
 
 private:
-	Mat srcImage;
-	Mat backImage;
+	Mat m_templateImage;
+	Mat m_backImage;
+
+	Mat m_showImage;
+
+signals:
+	void proResult(QImage);
 
 private slots:
-	void slot_get_template_image(QImage);
-	void slot_get_back_image(QImage);
+
 };
 
 #endif

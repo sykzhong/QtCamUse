@@ -15,7 +15,7 @@ public:
 	void getHist(Mat &mask = Mat());
 	void drawHist();
 	void removeSeg(HSVHist &back);
-	static void removeBack(HSVHist& dst, HSVHist& back);
+	static Mat removeBack(HSVHist& dst, HSVHist& back);
 	void showImage(string strpath = "");
 	void Init();
 	void Split(const Mat& src, Mat* mv, Mat &mask);			//带掩码的split函数，分解所得的通道mat行数为1，用于背景图像

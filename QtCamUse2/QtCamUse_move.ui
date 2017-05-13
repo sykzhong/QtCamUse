@@ -27,13 +27,13 @@
      </rect>
     </property>
    </widget>
-   <widget class="QFrame" name="frame">
+   <widget class="QFrame" name="frame_template">
     <property name="geometry">
      <rect>
-      <x>870</x>
-      <y>320</y>
-      <width>181</width>
-      <height>41</height>
+      <x>820</x>
+      <y>150</y>
+      <width>281</width>
+      <height>81</height>
      </rect>
     </property>
     <property name="frameShape">
@@ -42,31 +42,86 @@
     <property name="frameShadow">
      <enum>QFrame::Raised</enum>
     </property>
-    <widget class="QPushButton" name="pushButton_get_template">
+    <widget class="QGroupBox" name="groupBox_2">
      <property name="geometry">
       <rect>
-       <x>10</x>
-       <y>10</y>
-       <width>75</width>
-       <height>23</height>
+       <x>0</x>
+       <y>0</y>
+       <width>281</width>
+       <height>81</height>
       </rect>
      </property>
-     <property name="text">
-      <string>获取</string>
+     <property name="title">
+      <string/>
      </property>
+     <widget class="QPushButton" name="pushButton_get_template_save">
+      <property name="geometry">
+       <rect>
+        <x>50</x>
+        <y>10</y>
+        <width>75</width>
+        <height>23</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>获取并加载</string>
+      </property>
+     </widget>
+     <widget class="QPushButton" name="pushButton_get_template_load">
+      <property name="geometry">
+       <rect>
+        <x>160</x>
+        <y>10</y>
+        <width>75</width>
+        <height>23</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>加载</string>
+      </property>
+     </widget>
+     <widget class="QLabel" name="label_4">
+      <property name="geometry">
+       <rect>
+        <x>20</x>
+        <y>54</y>
+        <width>54</width>
+        <height>12</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>图片路径：</string>
+      </property>
+     </widget>
+     <widget class="QLineEdit" name="lineEdit_get_template_path">
+      <property name="enabled">
+       <bool>true</bool>
+      </property>
+      <property name="geometry">
+       <rect>
+        <x>80</x>
+        <y>50</y>
+        <width>181</width>
+        <height>20</height>
+       </rect>
+      </property>
+      <property name="acceptDrops">
+       <bool>true</bool>
+      </property>
+     </widget>
     </widget>
    </widget>
    <widget class="QLabel" name="label">
     <property name="geometry">
      <rect>
-      <x>870</x>
-      <y>300</y>
-      <width>81</width>
+      <x>820</x>
+      <y>130</y>
+      <width>121</width>
       <height>21</height>
      </rect>
     </property>
     <property name="text">
-     <string>获取模板图像</string>
+     <string>第二部：获取模板图像</string>
     </property>
    </widget>
    <widget class="QPushButton" name="pushButton_back_to_mainwindow">
@@ -95,7 +150,7 @@
      <string>第一步：获取背景图像</string>
     </property>
    </widget>
-   <widget class="QFrame" name="frame_2">
+   <widget class="QFrame" name="frame_back">
     <property name="geometry">
      <rect>
       <x>820</x>
@@ -125,7 +180,7 @@
      <widget class="QPushButton" name="pushButton_get_back_save">
       <property name="geometry">
        <rect>
-        <x>60</x>
+        <x>50</x>
         <y>10</y>
         <width>75</width>
         <height>23</height>
@@ -178,6 +233,61 @@
       </property>
      </widget>
     </widget>
+   </widget>
+   <widget class="QFrame" name="frame">
+    <property name="geometry">
+     <rect>
+      <x>820</x>
+      <y>260</y>
+      <width>281</width>
+      <height>81</height>
+     </rect>
+    </property>
+    <property name="frameShape">
+     <enum>QFrame::StyledPanel</enum>
+    </property>
+    <property name="frameShadow">
+     <enum>QFrame::Raised</enum>
+    </property>
+    <widget class="QGroupBox" name="groupBox_3">
+     <property name="geometry">
+      <rect>
+       <x>0</x>
+       <y>0</y>
+       <width>281</width>
+       <height>81</height>
+      </rect>
+     </property>
+     <property name="title">
+      <string/>
+     </property>
+     <widget class="QPushButton" name="pushButton_image_process">
+      <property name="geometry">
+       <rect>
+        <x>50</x>
+        <y>30</y>
+        <width>75</width>
+        <height>23</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>开始处理</string>
+      </property>
+     </widget>
+    </widget>
+   </widget>
+   <widget class="QLabel" name="label_5">
+    <property name="geometry">
+     <rect>
+      <x>830</x>
+      <y>250</y>
+      <width>121</width>
+      <height>16</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>第三步：模板图像操作</string>
+    </property>
    </widget>
   </widget>
   <widget class="QStatusBar" name="statusbar"/>
