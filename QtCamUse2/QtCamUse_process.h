@@ -19,7 +19,7 @@ class QtCamUse_process :public QMainWindow
 public:
 	QtCamUse_process(QWidget *parent, ImageProcess *);
 	~QtCamUse_process();
-	//void showEvent(QShowEvent *);
+	void showEvent(QShowEvent *);
 	//void closeEvent(QCloseEvent *);
 
 	QImage MattoQImage(Mat &);

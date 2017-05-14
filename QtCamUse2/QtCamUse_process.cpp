@@ -34,3 +34,9 @@ void QtCamUse_process::ImageShow(QImage image)
 	m_scene->setSceneRect(0, 0, 800, 600);
 	//m_scene->setSceneRect(0, 0, 800, 600);
 }
+
+void QtCamUse_process::showEvent(QShowEvent *)
+{
+	ui->gvMain->fitInView(m_scene->sceneRect(), Qt::KeepAspectRatio);
+}
+

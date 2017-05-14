@@ -22,6 +22,8 @@ public:
 	~QtCamUse_move();
 	void showEvent(QShowEvent *);
 	void closeEvent(QCloseEvent *);
+	void resizeEvent(QResizeEvent *);
+	void resizeView();
 	int status;
 
 protected:

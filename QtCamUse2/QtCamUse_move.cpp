@@ -67,15 +67,30 @@ void QtCamUse_move::Image_process(QImage img)
 
 	m_image_item = m_scene->addPixmap(QPixmap::fromImage(img));
 
-	m_scene->setSceneRect(0, 0, 800, 600);
+	//m_scene->setSceneRect(0, 0, img.width(), img.height());
 	//m_scene->setSceneRect(0, 0, 800, 600);
-
+	resizeView();
 	g_disply_fps++;
 }
 
 void QtCamUse_move::showEvent(QShowEvent *)
 {
-	ui->gvMain->fitInView(m_scene->sceneRect());
+	//ui->gvMain->fitInView(m_scene->sceneRect(), Qt::KeepAspectRatioByExpanding);
+	//ui->gvMain->fitInView(m_scene->sceneRect());
+}
+
+void QtCamUse_move::resizeView()
+{
+	ui->gvMain->fitInView(m_scene->sceneRect(), Qt::KeepAspectRatioByExpanding);
+}
+
+void QtCamUse_move::resizeEvent(QResizeEvent *event)
+{
+	//QtCamUse_move::resizeEvent(event);
+	//ui->gvMain->horizontalScrollBarPolicy();
+	//ui->gvMain->verticalScrollBarPolicy();
+	//ui->gvMain->fitInView(0, 0, 800, 600, Qt::KeepAspectRatioByExpanding);
+	//ui->gvMain->fitInView(m_scene->sceneRect(), Qt::KeepAspectRatioByExpanding);
 }
 
 void QtCamUse_move::closeEvent(QCloseEvent * e)
