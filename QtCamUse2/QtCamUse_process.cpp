@@ -6,7 +6,7 @@ QtCamUse_process::QtCamUse_process(QWidget *parent, ImageProcess *_m_imageproces
 	m_scene(0), m_image_item(0), m_imageprocess(_m_imageprocess)
 {
 	ui->setupUi(this);
-	m_scene = new QGraphicsScene(this);
+	m_scene = new QtCamUse_process_ChildScene();
 	ui->gvMain->setScene(m_scene);
 
 	qRegisterMetaType< cv::Mat >("cv::Mat");
@@ -17,8 +17,6 @@ QtCamUse_process::~QtCamUse_process()
 {
 
 }
-
-
 
 void QtCamUse_process::ImageShow(QImage image)
 {
@@ -45,4 +43,9 @@ void QtCamUse_process::showEvent(QShowEvent *)
 void QtCamUse_process::resizeView()
 {
 	ui->gvMain->fitInView(m_scene->sceneRect(), Qt::KeepAspectRatio);
+}
+
+void QtCamUse_process_ChildScene::mouseMoveEvent(QGraphicsSceneMouseEvent *e)
+{
+	emit mouse_move_pos(e->scenePos().x(), e->scenePos().y(), QT_MOUSE_MOVE);
 }

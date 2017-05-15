@@ -20,27 +20,28 @@
 QT_BEGIN_MOC_NAMESPACE
 QT_WARNING_PUSH
 QT_WARNING_DISABLE_DEPRECATED
-struct qt_meta_stringdata_ChildSceneClass_t {
+struct qt_meta_stringdata_QtCamUse_move_ChildScene_t {
     QByteArrayData data[3];
-    char stringdata0[32];
+    char stringdata0[41];
 };
 #define QT_MOC_LITERAL(idx, ofs, len) \
     Q_STATIC_BYTE_ARRAY_DATA_HEADER_INITIALIZER_WITH_OFFSET(len, \
-    qptrdiff(offsetof(qt_meta_stringdata_ChildSceneClass_t, stringdata0) + ofs \
+    qptrdiff(offsetof(qt_meta_stringdata_QtCamUse_move_ChildScene_t, stringdata0) + ofs \
         - idx * sizeof(QByteArrayData)) \
     )
-static const qt_meta_stringdata_ChildSceneClass_t qt_meta_stringdata_ChildSceneClass = {
+static const qt_meta_stringdata_QtCamUse_move_ChildScene_t qt_meta_stringdata_QtCamUse_move_ChildScene = {
     {
-QT_MOC_LITERAL(0, 0, 15), // "ChildSceneClass"
-QT_MOC_LITERAL(1, 16, 14), // "mouse_move_pos"
-QT_MOC_LITERAL(2, 31, 0) // ""
+QT_MOC_LITERAL(0, 0, 24), // "QtCamUse_move_ChildScene"
+QT_MOC_LITERAL(1, 25, 14), // "mouse_move_pos"
+QT_MOC_LITERAL(2, 40, 0) // ""
 
     },
-    "ChildSceneClass\0mouse_move_pos\0"
+    "QtCamUse_move_ChildScene\0mouse_move_pos\0"
+    ""
 };
 #undef QT_MOC_LITERAL
 
-static const uint qt_meta_data_ChildSceneClass[] = {
+static const uint qt_meta_data_QtCamUse_move_ChildScene[] = {
 
  // content:
        7,       // revision
@@ -62,10 +63,10 @@ static const uint qt_meta_data_ChildSceneClass[] = {
        0        // eod
 };
 
-void ChildSceneClass::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _id, void **_a)
+void QtCamUse_move_ChildScene::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _id, void **_a)
 {
     if (_c == QMetaObject::InvokeMetaMethod) {
-        ChildSceneClass *_t = static_cast<ChildSceneClass *>(_o);
+        QtCamUse_move_ChildScene *_t = static_cast<QtCamUse_move_ChildScene *>(_o);
         Q_UNUSED(_t)
         switch (_id) {
         case 0: _t->mouse_move_pos((*reinterpret_cast< int(*)>(_a[1])),(*reinterpret_cast< int(*)>(_a[2]))); break;
@@ -75,8 +76,8 @@ void ChildSceneClass::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int 
         int *result = reinterpret_cast<int *>(_a[0]);
         void **func = reinterpret_cast<void **>(_a[1]);
         {
-            typedef void (ChildSceneClass::*_t)(int , int );
-            if (*reinterpret_cast<_t *>(func) == static_cast<_t>(&ChildSceneClass::mouse_move_pos)) {
+            typedef void (QtCamUse_move_ChildScene::*_t)(int , int );
+            if (*reinterpret_cast<_t *>(func) == static_cast<_t>(&QtCamUse_move_ChildScene::mouse_move_pos)) {
                 *result = 0;
                 return;
             }
@@ -84,26 +85,26 @@ void ChildSceneClass::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int 
     }
 }
 
-const QMetaObject ChildSceneClass::staticMetaObject = {
-    { &QGraphicsScene::staticMetaObject, qt_meta_stringdata_ChildSceneClass.data,
-      qt_meta_data_ChildSceneClass,  qt_static_metacall, Q_NULLPTR, Q_NULLPTR}
+const QMetaObject QtCamUse_move_ChildScene::staticMetaObject = {
+    { &QGraphicsScene::staticMetaObject, qt_meta_stringdata_QtCamUse_move_ChildScene.data,
+      qt_meta_data_QtCamUse_move_ChildScene,  qt_static_metacall, Q_NULLPTR, Q_NULLPTR}
 };
 
 
-const QMetaObject *ChildSceneClass::metaObject() const
+const QMetaObject *QtCamUse_move_ChildScene::metaObject() const
 {
     return QObject::d_ptr->metaObject ? QObject::d_ptr->dynamicMetaObject() : &staticMetaObject;
 }
 
-void *ChildSceneClass::qt_metacast(const char *_clname)
+void *QtCamUse_move_ChildScene::qt_metacast(const char *_clname)
 {
     if (!_clname) return Q_NULLPTR;
-    if (!strcmp(_clname, qt_meta_stringdata_ChildSceneClass.stringdata0))
-        return static_cast<void*>(const_cast< ChildSceneClass*>(this));
+    if (!strcmp(_clname, qt_meta_stringdata_QtCamUse_move_ChildScene.stringdata0))
+        return static_cast<void*>(const_cast< QtCamUse_move_ChildScene*>(this));
     return QGraphicsScene::qt_metacast(_clname);
 }
 
-int ChildSceneClass::qt_metacall(QMetaObject::Call _c, int _id, void **_a)
+int QtCamUse_move_ChildScene::qt_metacall(QMetaObject::Call _c, int _id, void **_a)
 {
     _id = QGraphicsScene::qt_metacall(_c, _id, _a);
     if (_id < 0)
@@ -121,7 +122,7 @@ int ChildSceneClass::qt_metacall(QMetaObject::Call _c, int _id, void **_a)
 }
 
 // SIGNAL 0
-void ChildSceneClass::mouse_move_pos(int _t1, int _t2)
+void QtCamUse_move_ChildScene::mouse_move_pos(int _t1, int _t2)
 {
     void *_a[] = { Q_NULLPTR, const_cast<void*>(reinterpret_cast<const void*>(&_t1)), const_cast<void*>(reinterpret_cast<const void*>(&_t2)) };
     QMetaObject::activate(this, &staticMetaObject, 0, _a);

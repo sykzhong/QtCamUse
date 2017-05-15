@@ -6,8 +6,17 @@
 #include <fstream>
 using namespace std;
 using namespace cv;
+
+enum QtMouseEvent
+{
+	QT_MOUSE_LBUTTONDOWN = 0,
+	QT_MOUSE_MOVE = 1,
+	QT_MOUSE_RBUTTONDOWN = 2
+};
+
 class ProImage:public HSVHist
 {
+	Q_OBJECT
 public:
 	ProImage();
 	~ProImage();
@@ -60,5 +69,7 @@ protected:
 	vector<RotatedRect> vececllipse;	//记录进行椭圆拟合的轮廓
 
 	int angleindex;						//记录作为角度基准的轮廓索引（默认为最大的轮廓0）
+public slots:
+	void slot_receive_mouse_move_pos(int, int, int);
 };
 #endif

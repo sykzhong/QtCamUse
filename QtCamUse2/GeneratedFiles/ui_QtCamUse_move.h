@@ -62,7 +62,7 @@ public:
         centralwidget->setObjectName(QStringLiteral("centralwidget"));
         gvMain = new QGraphicsView(centralwidget);
         gvMain->setObjectName(QStringLiteral("gvMain"));
-        gvMain->setGeometry(QRect(10, 0, 800, 300));
+        gvMain->setGeometry(QRect(10, 0, 800, 600));
         frame_template = new QFrame(centralwidget);
         frame_template->setObjectName(QStringLiteral("frame_template"));
         frame_template->setGeometry(QRect(820, 150, 281, 81));

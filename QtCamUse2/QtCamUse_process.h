@@ -6,12 +6,22 @@
 #include <QtCamUse.h>
 #include "CameraApi.h"
 #include "ImageProcess.h"
-
+#include <qgraphicsscene.h>
+#include <QGraphicsSceneMouseEvent>
 
 namespace Ui
 {
 	class QtCamUse_processClass;
 }
+
+class QtCamUse_process_ChildScene :public QGraphicsScene
+{
+Q_OBJECT
+signals :
+	void mouse_move_pos(int, int, int);
+protected:
+	void mouseMoveEvent(QGraphicsSceneMouseEvent *);
+};
 
 class QtCamUse_process :public QMainWindow
 {
@@ -28,7 +38,7 @@ protected:
 
 private:
 	Ui::QtCamUse_processClass *ui;
-	QGraphicsScene *m_scene;				//摄像头图像显示的scene
+	QtCamUse_process_ChildScene *m_scene;				//摄像头图像显示的scene
 	QTimer *m_timer;						//更新摄像头状态的时间类
 	QGraphicsPixmapItem *m_image_item;
 

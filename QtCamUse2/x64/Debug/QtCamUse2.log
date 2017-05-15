@@ -1,6 +1,45 @@
-﻿  Uic'ing QtCamUse_move.ui...
-  QtCamUse_move.cpp
-e:\cloud\research\vision\qtcamuse2\qtcamuse2\ImageProcess.h(7): warning C4584: “ImageProcess”: 基类“QObject”已是“HSVHist”的基类
+﻿  Moc'ing ProImage.h...
+  moc_ImageProcess.cpp
+e:\cloud\research\vision\qtcamuse2\qtcamuse2\generatedfiles\debug\../../ImageProcess.h(8): warning C4584: “ImageProcess”: 基类“QObject”已是“HSVHist”的基类
+  D:\Qt\Qt5.8.0\5.8\msvc2015_64\include\QtCore/qobject.h(113): note: 参见“QObject”的声明
+  e:\cloud\research\vision\qtcamuse2\qtcamuse2\HSVHist.h(6): note: 参见“HSVHist”的声明
+  moc_ProImage.cpp
+  moc_QtCamUse.cpp
+e:\cloud\research\vision\qtcamuse2\qtcamuse2\ImageProcess.h(8): warning C4584: “ImageProcess”: 基类“QObject”已是“HSVHist”的基类
   d:\qt\qt5.8.0\5.8\msvc2015_64\include\qtgui\qgenericpluginfactory.h(50): note: 参见“QObject”的声明
   e:\cloud\research\vision\qtcamuse2\qtcamuse2\HSVHist.h(6): note: 参见“HSVHist”的声明
+  moc_QtCamUse_move.cpp
+e:\cloud\research\vision\qtcamuse2\qtcamuse2\ImageProcess.h(8): warning C4584: “ImageProcess”: 基类“QObject”已是“HSVHist”的基类
+  d:\qt\qt5.8.0\5.8\msvc2015_64\include\qtgui\qgenericpluginfactory.h(50): note: 参见“QObject”的声明
+  e:\cloud\research\vision\qtcamuse2\qtcamuse2\HSVHist.h(6): note: 参见“HSVHist”的声明
+  moc_QtCamUse_process.cpp
+e:\cloud\research\vision\qtcamuse2\qtcamuse2\ImageProcess.h(8): warning C4584: “ImageProcess”: 基类“QObject”已是“HSVHist”的基类
+  d:\qt\qt5.8.0\5.8\msvc2015_64\include\qtgui\qgenericpluginfactory.h(50): note: 参见“QObject”的声明
+  e:\cloud\research\vision\qtcamuse2\qtcamuse2\HSVHist.h(6): note: 参见“HSVHist”的声明
+  ImageProcess.cpp
+e:\cloud\research\vision\qtcamuse2\qtcamuse2\ImageProcess.h(8): warning C4584: “ImageProcess”: 基类“QObject”已是“HSVHist”的基类
+  D:\Qt\Qt5.8.0\5.8\msvc2015_64\include\QtCore/qobject.h(113): note: 参见“QObject”的声明
+  e:\cloud\research\vision\qtcamuse2\qtcamuse2\HSVHist.h(6): note: 参见“HSVHist”的声明
+  ProImage.cpp
+  QtCamUse.cpp
+e:\cloud\research\vision\qtcamuse2\qtcamuse2\ImageProcess.h(8): warning C4584: “ImageProcess”: 基类“QObject”已是“HSVHist”的基类
+  d:\qt\qt5.8.0\5.8\msvc2015_64\include\qtgui\qgenericpluginfactory.h(50): note: 参见“QObject”的声明
+  e:\cloud\research\vision\qtcamuse2\qtcamuse2\HSVHist.h(6): note: 参见“HSVHist”的声明
+  QtCamUse_move.cpp
+e:\cloud\research\vision\qtcamuse2\qtcamuse2\ImageProcess.h(8): warning C4584: “ImageProcess”: 基类“QObject”已是“HSVHist”的基类
+  d:\qt\qt5.8.0\5.8\msvc2015_64\include\qtgui\qgenericpluginfactory.h(50): note: 参见“QObject”的声明
+  e:\cloud\research\vision\qtcamuse2\qtcamuse2\HSVHist.h(6): note: 参见“HSVHist”的声明
+  QtCamUse_process.cpp
+e:\cloud\research\vision\qtcamuse2\qtcamuse2\ImageProcess.h(8): warning C4584: “ImageProcess”: 基类“QObject”已是“HSVHist”的基类
+  d:\qt\qt5.8.0\5.8\msvc2015_64\include\qtgui\qgenericpluginfactory.h(50): note: 参见“QObject”的声明
+  e:\cloud\research\vision\qtcamuse2\qtcamuse2\HSVHist.h(6): note: 参见“HSVHist”的声明
+  capturethread.cpp
+e:\cloud\research\vision\qtcamuse2\qtcamuse2\ImageProcess.h(8): warning C4584: “ImageProcess”: 基类“QObject”已是“HSVHist”的基类
+  d:\qt\qt5.8.0\5.8\msvc2015_64\include\qtgui\qgenericpluginfactory.h(50): note: 参见“QObject”的声明
+  e:\cloud\research\vision\qtcamuse2\qtcamuse2\HSVHist.h(6): note: 参见“HSVHist”的声明
+  main.cpp
+e:\cloud\research\vision\qtcamuse2\qtcamuse2\ImageProcess.h(8): warning C4584: “ImageProcess”: 基类“QObject”已是“HSVHist”的基类
+  d:\qt\qt5.8.0\5.8\msvc2015_64\include\qtgui\qgenericpluginfactory.h(50): note: 参见“QObject”的声明
+  e:\cloud\research\vision\qtcamuse2\qtcamuse2\HSVHist.h(6): note: 参见“HSVHist”的声明
+  正在生成代码...
   QtCamUse2.vcxproj -> E:\Cloud\Research\Vision\QtCamUse2\x64\Debug\QtCamUse2.exe

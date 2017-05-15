@@ -26,7 +26,7 @@ QtCamUse_move::QtCamUse_move(QWidget *parent)
 	m_imageprocess(new ImageProcess)
 {
 	ui->setupUi(this);
-	m_scene = new ChildSceneClass();
+	m_scene = new QtCamUse_move_ChildScene();
 	ui->gvMain->setScene(m_scene);
 	this->setMouseTracking(true);
 	ui->gvMain->setMouseTracking(true);
@@ -274,7 +274,7 @@ void QtCamUse_move::slot_mouse_move_pos_show(int _x, int _y)
 	m_mouse_pos->setText(QString("The mouse pos: x: %1  y:%2").arg(QString::number(_x, 'f', 2)).arg(QString::number(_y, 'f', 2)));
 }
 
-void ChildSceneClass::mouseMoveEvent(QGraphicsSceneMouseEvent *e)
+void QtCamUse_move_ChildScene::mouseMoveEvent(QGraphicsSceneMouseEvent *e)
 {
 	emit mouse_move_pos(e->scenePos().x(), e->scenePos().y());
 }

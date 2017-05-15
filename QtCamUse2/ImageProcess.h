@@ -3,6 +3,7 @@
 #include "GlobalHeader.h"
 #include "capturethread.h"
 #include "HSVHist.h"
+#include "ProImage.h"
 class ImageProcess:public QObject, public HSVHist
 {
 	Q_OBJECT
