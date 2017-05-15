@@ -50,7 +50,7 @@ public:
     QGroupBox *groupBox_3;
     QPushButton *pushButton_image_process;
     QLabel *label_5;
-    QStatusBar *statusbar;
+    QStatusBar *statusBar;
 
     void setupUi(QMainWindow *QtCamUse_moveClass)
     {
@@ -62,7 +62,7 @@ public:
         centralwidget->setObjectName(QStringLiteral("centralwidget"));
         gvMain = new QGraphicsView(centralwidget);
         gvMain->setObjectName(QStringLiteral("gvMain"));
-        gvMain->setGeometry(QRect(10, 0, 800, 600));
+        gvMain->setGeometry(QRect(10, 0, 800, 300));
         frame_template = new QFrame(centralwidget);
         frame_template->setObjectName(QStringLiteral("frame_template"));
         frame_template->setGeometry(QRect(820, 150, 281, 81));
@@ -131,9 +131,9 @@ public:
         label_5->setObjectName(QStringLiteral("label_5"));
         label_5->setGeometry(QRect(830, 250, 121, 16));
         QtCamUse_moveClass->setCentralWidget(centralwidget);
-        statusbar = new QStatusBar(QtCamUse_moveClass);
-        statusbar->setObjectName(QStringLiteral("statusbar"));
-        QtCamUse_moveClass->setStatusBar(statusbar);
+        statusBar = new QStatusBar(QtCamUse_moveClass);
+        statusBar->setObjectName(QStringLiteral("statusBar"));
+        QtCamUse_moveClass->setStatusBar(statusBar);
 
         retranslateUi(QtCamUse_moveClass);
 

@@ -31,12 +31,18 @@ void QtCamUse_process::ImageShow(QImage image)
 
 	m_image_item = m_scene->addPixmap(QPixmap::fromImage(image));
 
-	m_scene->setSceneRect(0, 0, 800, 600);
 	//m_scene->setSceneRect(0, 0, 800, 600);
+	//m_scene->setSceneRect(0, 0, 800, 600);
+	resizeView();
 }
 
 void QtCamUse_process::showEvent(QShowEvent *)
 {
-	ui->gvMain->fitInView(m_scene->sceneRect(), Qt::KeepAspectRatio);
+	//ui->gvMain->fitInView(m_scene->sceneRect(), Qt::KeepAspectRatioByExpanding);
+	//ui->gvMain->fitInView(m_scene->sceneRect(), Qt::KeepAspectRatio);
 }
 
+void QtCamUse_process::resizeView()
+{
+	ui->gvMain->fitInView(m_scene->sceneRect(), Qt::KeepAspectRatio);
+}

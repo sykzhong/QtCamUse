@@ -26,13 +26,19 @@ QtCamUse_move::QtCamUse_move(QWidget *parent)
 	m_imageprocess(new ImageProcess)
 {
 	ui->setupUi(this);
-	m_scene = new QGraphicsScene(this);
+	m_scene = new ChildSceneClass();
 	ui->gvMain->setScene(m_scene);
+	this->setMouseTracking(true);
+	ui->gvMain->setMouseTracking(true);
+	connect(m_scene, SIGNAL(mouse_move_pos(int, int)), this, SLOT(slot_mouse_move_pos_show(int, int)));
+	//m_timer = new QTimer(this);
+	//connect(m_timer, SIGNAL(timeout()), this, SLOT(camera_statues()));
+	//m_timer->start(1000);
 
-	m_timer = new QTimer(this);
-	connect(m_timer, SIGNAL(timeout()), this, SLOT(camera_statues()));
-	m_timer->start(1000);
-
+	m_mouse_pos = new QLabel(this);
+	m_mouse_pos->setAlignment(Qt::AlignHCenter);
+	ui->statusBar->addWidget(m_mouse_pos);
+	
 	m_thread = new CaptureThread(this);		//图像传输线程的信号接收完成于上一窗口，使全程只有一条图像线程
 
 	connect(m_thread, SIGNAL(captured(QImage)),
@@ -81,7 +87,9 @@ void QtCamUse_move::showEvent(QShowEvent *)
 
 void QtCamUse_move::resizeView()
 {
-	ui->gvMain->fitInView(m_scene->sceneRect(), Qt::KeepAspectRatioByExpanding);
+	ui->gvMain->fitInView(m_scene->sceneRect(), Qt::KeepAspectRatio);
+	//ui->gvMain->fitInView(0, 0, 400, 400, Qt::KeepAspectRatioByExpanding);
+
 }
 
 void QtCamUse_move::resizeEvent(QResizeEvent *event)
@@ -181,7 +189,7 @@ void QtCamUse_move::on_pushButton_get_back_load_clicked()
 	QString path;
 	char * filename;
 
-	path = QFileDialog::getOpenFileName(this, "Save BackImage", NULL, tr("BMP Image (*.bmp *.BMP)"));
+	path = QFileDialog::getOpenFileName(this, "Load BackImage", NULL, tr("BMP Image (*.bmp *.BMP)"));
 	ui->lineEdit_get_back_path->setText(path);
 	QByteArray tmp = path.toLatin1();
 	filename = tmp.data();
@@ -241,7 +249,7 @@ void QtCamUse_move::on_pushButton_get_template_load_clicked()
 	QString path;
 	char * filename;
 
-	path = QFileDialog::getOpenFileName(this, "Save TemplateImage", NULL);
+	path = QFileDialog::getOpenFileName(this, "Load TemplateImage", NULL, tr("BMP Image (*.bmp *.BMP)"));
 	ui->lineEdit_get_template_path->setText(path);
 	QByteArray tmp = path.toLatin1();
 	filename = tmp.data();
@@ -259,4 +267,14 @@ void QtCamUse_move::on_pushButton_image_process_clicked()
 	QtCamUse_process *processwin = new QtCamUse_process(this, m_imageprocess);
 	processwin->show();
 	m_imageprocess->processImage();
+}
+
+void QtCamUse_move::slot_mouse_move_pos_show(int _x, int _y)
+{
+	m_mouse_pos->setText(QString("The mouse pos: x: %1  y:%2").arg(QString::number(_x, 'f', 2)).arg(QString::number(_y, 'f', 2)));
+}
+
+void ChildSceneClass::mouseMoveEvent(QGraphicsSceneMouseEvent *e)
+{
+	emit mouse_move_pos(e->scenePos().x(), e->scenePos().y());
 }

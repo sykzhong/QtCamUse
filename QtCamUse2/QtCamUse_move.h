@@ -2,16 +2,31 @@
 #define QTCAMUSE_MOVE_H
 
 #include <QtGui>
+#include <QMouseEvent>
 
 #include <QtCamUse.h>
 #include "CameraApi.h"
 #include "ImageProcess.h"
 #include "QtCamUse_process.h"
 
+#include <qgraphicsscene.h>
+#include <QGraphicsSceneMouseEvent>
+
 namespace Ui
 {
 	class QtCamUse_moveClass;
 }
+
+
+class ChildSceneClass :public QGraphicsScene
+{
+	Q_OBJECT
+		signals :
+	void mouse_move_pos(int, int);
+protected:
+	void mouseMoveEvent(QGraphicsSceneMouseEvent *);
+
+};
 
 class QtCamUse_move :public QMainWindow
 {
@@ -32,12 +47,14 @@ protected:
 private:
 	Ui::QtCamUse_moveClass *ui;
 
-	QGraphicsScene *m_scene;				//摄像头图像显示的scene
+	ChildSceneClass *m_scene;				//摄像头图像显示的scene
 	QTimer *m_timer;						//更新摄像头状态的时间类
 
 	CaptureThread* m_thread;				
 	QMutex mutex;							//同步锁
 	QGraphicsPixmapItem *m_image_item;
+
+	QLabel *m_mouse_pos;
 
 
 signals:
@@ -53,6 +70,7 @@ private slots:
 	void on_pushButton_get_template_save_clicked();
 	void on_pushButton_get_template_load_clicked();
 	void on_pushButton_image_process_clicked();
+	void slot_mouse_move_pos_show(int, int);
 };
 
 #endif

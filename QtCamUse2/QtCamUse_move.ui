@@ -290,7 +290,7 @@
     </property>
    </widget>
   </widget>
-  <widget class="QStatusBar" name="statusbar"/>
+  <widget class="QStatusBar" name="statusBar"/>
  </widget>
  <resources/>
  <connections/>

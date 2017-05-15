@@ -20,6 +20,7 @@ public:
 	QtCamUse_process(QWidget *parent, ImageProcess *);
 	~QtCamUse_process();
 	void showEvent(QShowEvent *);
+	void resizeView();
 	//void closeEvent(QCloseEvent *);
 
 	QImage MattoQImage(Mat &);
