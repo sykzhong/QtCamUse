@@ -23,11 +23,12 @@ extern int                     g_disply_fps;     //统计显示帧率
 QtCamUse_move::QtCamUse_move(QWidget *parent)
 	:ui(new Ui::QtCamUse_moveClass),
 	m_scene(0), m_image_item(0),
-	m_imageprocess(new ImageProcess)
+	m_imageprocess(new QtImageProcess)
 {
 	ui->setupUi(this);
 	m_scene = new QtCamUse_move_ChildScene();
 	ui->gvMain->setScene(m_scene);
+
 	this->setMouseTracking(true);
 	ui->gvMain->setMouseTracking(true);
 	connect(m_scene, SIGNAL(mouse_move_pos(int, int)), this, SLOT(slot_mouse_move_pos_show(int, int)));

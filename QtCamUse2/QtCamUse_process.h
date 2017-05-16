@@ -5,7 +5,7 @@
 
 #include <QtCamUse.h>
 #include "CameraApi.h"
-#include "ImageProcess.h"
+#include "QtImageProcess.h"
 #include <qgraphicsscene.h>
 #include <QGraphicsSceneMouseEvent>
 
@@ -20,14 +20,14 @@ Q_OBJECT
 signals :
 	void mouse_move_pos(int, int, int);
 protected:
-	void mouseMoveEvent(QGraphicsSceneMouseEvent *);
+	void mousePressEvent(QGraphicsSceneMouseEvent *);
 };
 
 class QtCamUse_process :public QMainWindow
 {
 	Q_OBJECT
 public:
-	QtCamUse_process(QWidget *parent, ImageProcess *);
+	QtCamUse_process(QWidget *parent, QtImageProcess *);
 	~QtCamUse_process();
 	void showEvent(QShowEvent *);
 	void resizeView();
@@ -42,7 +42,7 @@ private:
 	QTimer *m_timer;						//更新摄像头状态的时间类
 	QGraphicsPixmapItem *m_image_item;
 
-	ImageProcess *m_imageprocess;			
+	QtImageProcess *m_imageprocess;			
 private slots:
 	void ImageShow(QImage image);
 };

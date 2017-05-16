@@ -92,7 +92,7 @@ void ProImage::setImageWin(const string &_winname)
 	//for (int i = 0; i < veccon.size(); i++)
 	//	coverImage(m_showimage, r_orgcon[i]);
 	//reset();
-	namedWindow(winname, WINDOW_AUTOSIZE);
+	//namedWindow(winname, WINDOW_AUTOSIZE);
 	///////////////////////////////////////
 }
 
@@ -355,7 +355,6 @@ void ProImage::slot_receive_mouse_move_pos(int x, int y, int event)
 			break;
 		}
 	}
-
 }
 
 void ProImage::getData(ProImage Temp)		//ProImage类之间传递被选轮廓的index
@@ -421,3 +420,65 @@ void ProImage::showState()
 	//printf("*****************************\n");
 }
 
+void ProImage::proMouseEvent(int x, int y, int event)
+{
+	int index = 0;							//轮廓索引值，正值表示存在轮廓
+	if (y < 0 || y >= this->srcimage.rows || x < 0 || x >= this->srcimage.cols)
+		return;
+	for (int i = 0; i <this->vecImageCon.size(); i++)
+	{
+		if (this->vecImageCon[i].value_image.at<uchar>(y, x) != 0)
+		{
+			index = this->vecImageCon[i].value_image.at<uchar>(y, x);
+			break;
+		}
+	}
+	switch (event)
+	{
+	case QT_MOUSE_LBUTTONDOWN:		//左键单击，则对所选轮廓的颜色、状态进行相应更改
+		if (index > 0)
+		{
+			int &_flag = this->vecImageCon[index - 1].flag;
+			_flag++;
+			if (_flag >= sizeof(ImageCon::g_color) / sizeof(Scalar))
+				_flag = 0;
+			this->vecImageCon[index - 1].updateColor();
+		}
+		this->showState();
+		break;
+	case QT_MOUSE_MOVE:
+		cout << this->sykcheck.at<Vec3b>(y, x) << endl;
+		if (index > 0)
+		{
+			this->highlightImage(index - 1);
+			this->selectindex = index;
+		}
+		else
+		{
+			if (this->selectindex != -1)
+			{
+				this->lowlightImage(this->selectindex - 1);
+				this->selectindex = -1;
+			}
+		}
+		break;
+	case QT_MOUSE_RBUTTONDOWN:
+		if (index > 0)
+		{
+			if (index - 1 != this->angleindex)
+			{
+				/***更新proimage的angleindex***/
+				this->vecImageCon[this->angleindex].angleflag = 0;
+				this->angleindex = index - 1;
+				this->vecImageCon[this->angleindex].angleflag = 1;
+				this->showState();
+			}
+			break;
+		}
+	}
+}
+
+Mat ProImage::transProResult()
+{
+	return m_showimage;
+}

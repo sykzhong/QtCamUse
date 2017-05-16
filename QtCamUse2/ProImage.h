@@ -42,9 +42,12 @@ public:
 	void writeResult(string _imgname = "");					//显示用户操作的最终结果
 
 	static void onMouseHandle(int event, int x, int y, int flags, void* param);
+	void proMouseEvent(int x, int y, int event);
 	static int compArea(vector<Point> first, vector<Point> second);
 
 	void reset();
+
+	Mat transProResult();									//作为对外传输显示图像的通道
 private:
 	Mat conindex;						//记录轮廓索引值
 	vector<Vec4i> hierachy;				//轮廓等级
@@ -71,5 +74,6 @@ protected:
 	int angleindex;						//记录作为角度基准的轮廓索引（默认为最大的轮廓0）
 public slots:
 	void slot_receive_mouse_move_pos(int, int, int);
+	
 };
 #endif

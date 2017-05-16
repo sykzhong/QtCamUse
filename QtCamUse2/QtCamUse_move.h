@@ -6,7 +6,7 @@
 
 #include <QtCamUse.h>
 #include "CameraApi.h"
-#include "ImageProcess.h"
+#include "QtImageProcess.h"
 #include "QtCamUse_process.h"
 
 #include <qgraphicsscene.h>
@@ -40,7 +40,7 @@ public:
 	int status;
 
 protected:
-	ImageProcess *m_imageprocess;			//进行图像处理的正体
+	QtImageProcess *m_imageprocess;			//进行图像处理的正体
 
 private:
 	Ui::QtCamUse_moveClass *ui;
