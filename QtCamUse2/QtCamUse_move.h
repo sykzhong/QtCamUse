@@ -54,7 +54,6 @@ private:
 
 	QLabel *m_mouse_pos;
 
-
 signals:
 	void back_to_mainwindow();
 	void get_template_image();

@@ -44,6 +44,7 @@ void QtImageProcess::processImage()
 	back->getImage(m_backImage);
 	m_showImage = HSVHist::removeBack(*src, *back);
 	emit proResult(Mat2QImage(m_showImage));
+	src->getContour();
 	src->setImageWin("");
 	src->initWin();
 }

@@ -17,10 +17,13 @@ namespace Ui
 class QtCamUse_process_ChildScene :public QGraphicsScene
 {
 Q_OBJECT
+public:
+	QtCamUse_process_ChildScene():point(QPointF(0, 0)){}
 signals :
 	void mouse_move_pos(int, int, int);
 protected:
-	void mousePressEvent(QGraphicsSceneMouseEvent *);
+	void mouseMoveEvent(QGraphicsSceneMouseEvent *);
+	QPointF point;				//用于记录鼠标前后的坐标
 };
 
 class QtCamUse_process :public QMainWindow
@@ -42,7 +45,8 @@ private:
 	QTimer *m_timer;						//更新摄像头状态的时间类
 	QGraphicsPixmapItem *m_image_item;
 
-	QtImageProcess *m_imageprocess;			
+	QtImageProcess *m_imageprocess;		
+
 private slots:
 	void ImageShow(QImage image);
 };

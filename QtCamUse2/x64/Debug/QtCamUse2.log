@@ -1,5 +1,5 @@
-﻿  QtImageProcess.cpp
+﻿  QtCamUse_process.cpp
 e:\cloud\research\vision\qtcamuse2\qtcamuse2\QtImageProcess.h(8): warning C4584: “QtImageProcess”: 基类“QObject”已是“HSVHist”的基类
-  D:\Qt\Qt5.8.0\5.8\msvc2015_64\include\QtCore/qobject.h(113): note: 参见“QObject”的声明
+  d:\qt\qt5.8.0\5.8\msvc2015_64\include\qtgui\qgenericpluginfactory.h(50): note: 参见“QObject”的声明
   e:\cloud\research\vision\qtcamuse2\qtcamuse2\HSVHist.h(6): note: 参见“HSVHist”的声明
   QtCamUse2.vcxproj -> E:\Cloud\Research\Vision\QtCamUse2\x64\Debug\QtCamUse2.exe
