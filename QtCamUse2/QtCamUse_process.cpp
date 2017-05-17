@@ -27,6 +27,8 @@ QtCamUse_process::~QtCamUse_process()
 
 void QtCamUse_process::ImageShow(QImage image)
 {
+	disconnect(this->m_scene, SIGNAL(mouse_move_pos(int, int, int)), m_imageprocess, SLOT(slot_receive_mouse_event(int, int, int)));
+	//终止鼠标事件的响应，防止fitinview引起的鼠标事件循环响应死锁bug
 	if (m_image_item)
 	{
 		m_scene->removeItem(m_image_item);
@@ -39,6 +41,8 @@ void QtCamUse_process::ImageShow(QImage image)
 	//m_scene->setSceneRect(0, 0, 800, 600);
 	//m_scene->setSceneRect(0, 0, 800, 600);
 	resizeView();
+	//重启鼠标事件响应
+	connect(this->m_scene, SIGNAL(mouse_move_pos(int, int, int)), m_imageprocess, SLOT(slot_receive_mouse_event(int, int, int)));
 }
 
 void QtCamUse_process::showEvent(QShowEvent *)
@@ -54,11 +58,13 @@ void QtCamUse_process::resizeView()
 
 void QtCamUse_process_ChildScene::mouseMoveEvent(QGraphicsSceneMouseEvent *e)
 {
-	if (int(point.x()) != int(e->scenePos().x()) || int(point.y()) != int(e->scenePos().y()))
+	int x = e->scenePos().x();
+	int y = e->scenePos().y();
+	if (point.x() != x || point.y() != y)
 	{
-		point.setX(int(e->scenePos().x()));
-		point.setY(int(e->scenePos().y()));
-		emit mouse_move_pos(e->scenePos().x(), e->scenePos().y(), QT_MOUSE_MOVE);			//用于传输给ImageProcess类的slot
+		point.setX(x);
+		point.setY(y);
+		emit mouse_move_pos(x, y, QT_MOUSE_MOVE);			//用于传输给ImageProcess类的slot
 	}
 	else
 		return;

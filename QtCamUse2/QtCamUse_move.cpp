@@ -31,7 +31,7 @@ QtCamUse_move::QtCamUse_move(QWidget *parent)
 
 	this->setMouseTracking(true);
 	ui->gvMain->setMouseTracking(true);
-	connect(m_scene, SIGNAL(mouse_move_pos(int, int)), this, SLOT(slot_mouse_move_pos_show(int, int)));
+	connect(m_scene, SIGNAL(mouse_move_pos(int, int)), this, SLOT(slot_mouse_move_pos_show(int, int)), Qt::QueuedConnection);
 	//m_timer = new QTimer(this);
 	//connect(m_timer, SIGNAL(timeout()), this, SLOT(camera_statues()));
 	//m_timer->start(1000);
@@ -60,36 +60,37 @@ QtCamUse_move::~QtCamUse_move()
 
 void QtCamUse_move::Image_process(QImage img)
 {
-
+	
 	if (m_thread->quit)
 	{
 		return;
 	}
+	disconnect(m_scene, SIGNAL(mouse_move_pos(int, int)), this, SLOT(slot_mouse_move_pos_show(int, int)));
 	if (m_image_item)
 	{
 		m_scene->removeItem(m_image_item);
 		delete m_image_item;
 		m_image_item = 0;
 	}
-
+	
 	m_image_item = m_scene->addPixmap(QPixmap::fromImage(img));
-
+	resizeView();
+	
 	//m_scene->setSceneRect(0, 0, img.width(), img.height());
 	//m_scene->setSceneRect(0, 0, 800, 600);
-	resizeView();
+	
+	connect(m_scene, SIGNAL(mouse_move_pos(int, int)), this, SLOT(slot_mouse_move_pos_show(int, int)));
 	g_disply_fps++;
 }
 
 void QtCamUse_move::showEvent(QShowEvent *)
 {
-	//ui->gvMain->fitInView(m_scene->sceneRect(), Qt::KeepAspectRatioByExpanding);
-	//ui->gvMain->fitInView(m_scene->sceneRect());
+	//ui->gvMain->fitInView(m_scene->sceneRect(), Qt::KeepAspectRatio);
 }
 
 void QtCamUse_move::resizeView()
 {
-	ui->gvMain->fitInView(m_scene->sceneRect(), Qt::KeepAspectRatio);
-	//ui->gvMain->fitInView(0, 0, 400, 400, Qt::KeepAspectRatioByExpanding);
+	ui->gvMain->fitInView(m_scene->sceneRect(), Qt::KeepAspectRatio);		//sykdebug
 
 }
 
@@ -99,7 +100,7 @@ void QtCamUse_move::resizeEvent(QResizeEvent *event)
 	//ui->gvMain->horizontalScrollBarPolicy();
 	//ui->gvMain->verticalScrollBarPolicy();
 	//ui->gvMain->fitInView(0, 0, 800, 600, Qt::KeepAspectRatioByExpanding);
-	//ui->gvMain->fitInView(m_scene->sceneRect(), Qt::KeepAspectRatioByExpanding);
+	//ui->gvMain->fitInView(m_scene->sceneRect(), Qt::KeepAspectRatio);
 }
 
 void QtCamUse_move::closeEvent(QCloseEvent * e)
@@ -277,5 +278,7 @@ void QtCamUse_move::slot_mouse_move_pos_show(int _x, int _y)
 
 void QtCamUse_move_ChildScene::mouseMoveEvent(QGraphicsSceneMouseEvent *e)
 {
+	int x = e->scenePos().x();
+	int y = e->scenePos().y();
 	emit mouse_move_pos(e->scenePos().x(), e->scenePos().y());
 }
